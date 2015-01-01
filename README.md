@@ -13,4 +13,9 @@ Installation
 Building
 --------
 
-1. Run `grunt` from the `rooms` folder of the respository to build the js files for each room from source.
+* Run `grunt` from the `rooms` folder of the respository to build the js files for each room from source.
+* Alternately to use grunt to watch the `rooms/src` folder for changes run `grunt watch` from the root of the repository.
+
+Every time you build using `grunt` you'll receive feedback on your JavaScript code including line numbers which will
+suggest improvements. In the event of a JavaScript error in your code, the build will fail and it will tell you what you
+did wrong.

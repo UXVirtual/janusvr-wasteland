@@ -3,6 +3,14 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        jshint: {
+            files: ["Gruntfile.js", "src/**/*.js"],
+            options: {
+                globals: {
+                    room: true
+                }
+            }
+        },
         uglify: {
 
             options: {
@@ -14,7 +22,16 @@ module.exports = function(grunt) {
 
             wasteland: {
                 files: {
-                    'js/wasteland.min.js': ['src/elevator.js']
+                    'js/wasteland.min.js': ['src/rooms/wasteland/elevator.js']
+                }
+            }
+        },
+        watch: {
+            js: {
+                files: ["<%= jshint.files %>"],
+                tasks: ["jshint", "uglify"],
+                options: {
+                    livereload: false
                 }
             }
         }
@@ -22,6 +39,8 @@ module.exports = function(grunt) {
 
     // Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
 
     // Default task(s).
     grunt.registerTask('default', ['uglify']);

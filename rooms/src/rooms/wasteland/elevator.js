@@ -26,9 +26,9 @@ var stop = [14.6, 74];
 
 room.elevClick = function() {
 
-    if (elevator.activated == 0)
+    if (elevator.activated === 0)
     {
-        if (elevator.direction == 1) //Upwards
+        if (elevator.direction === 1) //Upwards
         {
             if (elevator.gotostop+1 >= stop.length) //If the next stop is larger than the array of stops
             {
@@ -52,35 +52,37 @@ room.elevClick = function() {
                 elevator.gotostop -= 1; //Otherwise, let you go down.
             }
         }
-        timer = 0
+        timer = 0;
         elevator.activated = 1; //Activate elevator
     }
 
-}
+};
 
 room.update = function() {
+
+    var movespeed;
 
     if (elevator.cycleinterval != -1)
     {
         if (timer > elevator.cycleinterval)
         {
-            room.elevClick()
+            room.elevClick();
         }
         else
         {
-            timer += 1
+            timer += 1;
         }
     }
 
-    if (elevator.activated == 1)
+    if (elevator.activated === 1)
     {
-        if (elevator.direction == 1) //if moving upwards
+        if (elevator.direction === 1) //if moving upwards
         {
-            var movespeed = +0.05 //Set movespeed (referenced when moving elevator)
+            movespeed = +0.05; //Set movespeed (referenced when moving elevator)
 
             for(i=elevator.gotostop;i<=stop.length;i++) //start loop beginning index to next stop
             {
-                if (room.objects["elevator"].pos.y > stop[i]) //if elevator next stop is smaller than elevator elevation
+                if (room.objects.elevator.pos.y > stop[i]) //if elevator next stop is smaller than elevator elevation
                 {
                     elevator.activated = 0; //disable elevator
                     break;
@@ -89,10 +91,10 @@ room.update = function() {
         }
         else //if moving down
         {
-            var movespeed = -0.05
+            movespeed = -0.05;
             for(i=elevator.gotostop;i>=0;i--) //start loop beginning index to next stop
             {
-                if (room.objects["elevator"].pos.y < stop[i]) //if elevator next stop is smaller than elevator elevation
+                if (room.objects.elevator.pos.y < stop[i]) //if elevator next stop is smaller than elevator elevation
                 {
                     elevator.activated = 0; //disable elevator
                     break;
@@ -102,17 +104,17 @@ room.update = function() {
     }
     else
     {
-        var movespeed = 0
+        movespeed = 0;
     }
 
 
     if (elevator.activated == 1) //Update elevator height
     {
-        room.objects["elevator"].pos.y += movespeed;
+        room.objects.elevator.pos.y += movespeed;
     }
     else
     {
-        room.objects["elevator"].pos.y = stop[elevator.gotostop]; //Clip to the current stop
+        room.objects.elevator.pos.y = stop[elevator.gotostop]; //Clip to the current stop
     }
 
     /*if ((player.pos.y < room.objects["elevator"].pos.y) && (player.pos.y > room.objects["elevator"].pos.y-2)) //If player is below object, update height.
@@ -128,4 +130,4 @@ room.update = function() {
     }*/
 
 
-}
+};
