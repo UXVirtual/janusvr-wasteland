@@ -43,11 +43,16 @@ module.exports = function(grunt) {
                 beautify: true
             },
 
+            /** START DEFINE ROOM JS FILES **/
+
             wasteland: {
                 files: {
+                    //output JS file path, input array of JS file paths to combine
                     'js/wasteland.min.js': ['src/rooms/wasteland/elevator.js']
                 }
             }
+
+            /** END DEFINE ROOM JS FILES **/
         },
         watch: {
             js: {
