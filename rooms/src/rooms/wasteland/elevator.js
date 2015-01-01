@@ -62,7 +62,7 @@ room.update = function() {
 
     var movespeed;
 
-    if (elevator.cycleinterval != -1)
+    if (elevator.cycleinterval !== -1)
     {
         if (timer > elevator.cycleinterval)
         {
@@ -80,7 +80,7 @@ room.update = function() {
         {
             movespeed = +0.05; //Set movespeed (referenced when moving elevator)
 
-            for(i=elevator.gotostop;i<=stop.length;i++) //start loop beginning index to next stop
+            for(var i = elevator.gotostop; i <= stop.length; i++) //start loop beginning index to next stop
             {
                 if (room.objects.elevator.pos.y > stop[i]) //if elevator next stop is smaller than elevator elevation
                 {
@@ -92,9 +92,9 @@ room.update = function() {
         else //if moving down
         {
             movespeed = -0.05;
-            for(i=elevator.gotostop;i>=0;i--) //start loop beginning index to next stop
+            for(var x = elevator.gotostop; x >= 0; x--) //start loop beginning index to next stop
             {
-                if (room.objects.elevator.pos.y < stop[i]) //if elevator next stop is smaller than elevator elevation
+                if (room.objects.elevator.pos.y < stop[x]) //if elevator next stop is smaller than elevator elevation
                 {
                     elevator.activated = 0; //disable elevator
                     break;
@@ -108,7 +108,7 @@ room.update = function() {
     }
 
 
-    if (elevator.activated == 1) //Update elevator height
+    if (elevator.activated === 1) //Update elevator height
     {
         room.objects.elevator.pos.y += movespeed;
     }

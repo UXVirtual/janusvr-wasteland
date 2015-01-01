@@ -1,3 +1,5 @@
+var module;
+
 module.exports = function(grunt) {
 
     // Project configuration.
@@ -5,9 +7,30 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         jshint: {
             files: ["Gruntfile.js", "src/**/*.js"],
+            // configuration options for jshint parsing. For a full explanation of what these do see the URL below:
+            // http://jshint.com/docs/options/
             options: {
+                es3: true,
+                es5: false,
+                camelcase: true,
+                curly: true,
+                eqeqeq: true,
+                immed: true,
+                latedef: false,
+                maxerr: 0,
+                newcap: true,
+                noempty: true,
+                nonbsp: true,
+                nonew: true,
+                undef: true,
+                unused: false,
+
                 globals: {
-                    room: true
+                    room: true,
+                    debug: true,
+                    print: true,
+                    uniqueId: true,
+                    removeKey: true
                 }
             }
         },
