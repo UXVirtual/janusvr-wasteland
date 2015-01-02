@@ -26,11 +26,15 @@ module.exports = function(grunt) {
                 unused: false,
 
                 globals: {
+                    'debugger': true,
                     room: true,
                     debug: true,
                     print: true,
                     uniqueId: true,
-                    removeKey: true
+                    removeKey: true,
+
+                    //custom classes in src/lib/classes
+                    Elevator: true
                 }
             }
         },
@@ -48,7 +52,7 @@ module.exports = function(grunt) {
             wasteland: {
                 files: {
                     //output JS file path, input array of JS file paths to combine
-                    'js/wasteland.min.js': ['src/rooms/wasteland/elevator.js']
+                    'js/wasteland.min.js': ['src/lib/classes/elevator.js','src/rooms/wasteland/main.js']
                 }
             }
 

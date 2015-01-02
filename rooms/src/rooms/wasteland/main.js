@@ -6,6 +6,18 @@
  * @author Michael Andrew (michael@uxvirtual.com)
  */
 
+var room = room;
+
+room.elevators = {
+    elevator: new Elevator('elevator',[14.6, 40],20),
+    elevator2: new Elevator('elevator2',[30, 74],20)
+};
+
+room.log = function(text){
+    room.objects.debugText.text = text;
+};
+
+
 /**
  * On Enter
  *
@@ -25,7 +37,9 @@ room.onEnter = function(){
  * speed regardless of framerate.
  */
 room.update = function(dt){
-
+    for(var elevator in room.elevators){
+        room.elevators[elevator].update();
+    }
 };
 
 /**
