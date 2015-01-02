@@ -14,7 +14,7 @@ room.elevators = {
 };
 
 room.log = function(text){
-    room.objects.debugText.text = text;
+    //room.objects.debugText.text = text;
 };
 
 
