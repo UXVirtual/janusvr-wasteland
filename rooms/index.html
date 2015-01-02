@@ -37,6 +37,12 @@
 
             <AssetGhost id="sand-lurker" src="ghosts/sand-lurker.ghost" />
 
+            <AssetObject id="shadercube" src="models/cube.obj" />
+
+
+            <AssetShader id="mystical-shader" src="shaders/mysticalshader.txt" />
+
+
             <!--<AssetObject id="zombie" src="models/zombies/zombie_normal.obj" mtl="models/zombies/zombie_normal.mtl" />
             <AssetObject id="zombie-slow" src="models/zombies/zombie_slow.obj" mtl="models/zombies/zombie_slow.mtl" />
             <AssetObject id="zombie-fire" src="models/zombies/zombie_fire.obj" mtl="models/zombies/zombie_fire.mtl" />
@@ -51,26 +57,29 @@
 
             <Sound id="ambient-music" rect="-100 -50 100 50" loop="true" />
 
-            <Object id="dust-devil" pos="33 11 -35" scale="4 4 4" lighting="false" shader="" rotate_axis="0.000 1.000 0.000" rotate_deg_per_sec="120" />
-            <Object id="dust-devil" pos="33 15 -35" scale="5 5 5" lighting="false" shader="" rotate_axis="0.000 1.000 0.000" rotate_deg_per_sec="60" />
-            <Object id="dust-devil" pos="33 13 -35" scale="7 7 7" lighting="false" shader="" rotate_axis="0.000 1.000 0.000" rotate_deg_per_sec="90" />
+            <Object id="dust-devil" pos="33 11 -35" scale="4 4 4" lighting="false" rotate_axis="0.000 1.000 0.000" rotate_deg_per_sec="120" />
+            <Object id="dust-devil" pos="33 15 -35" scale="5 5 5" lighting="false" rotate_axis="0.000 1.000 0.000" rotate_deg_per_sec="60" />
+            <Object id="dust-devil" pos="33 13 -35" scale="7 7 7" lighting="false" rotate_axis="0.000 1.000 0.000" rotate_deg_per_sec="90" />
 
-            <Object id="skybox" pos="0 0 0" lighting="false" shader="" scale="2800 2800 2800" xdir="-0.87 0 -0.5" zdir="0.5 0 -8.87" locked="true" />
+            <Object id="skybox" pos="0 0 0" lighting="false" scale="2800 2800 2800" xdir="-0.87 0 -0.5" zdir="0.5 0 -8.87" locked="true" />
 
-            <Object id="skybox2" pos="0 0 0" lighting="false" shader="" scale="3000 3000 3000" rotate_axis="0.000 1.000 0.000" rotate_deg_per_sec="0.5" locked="true" />
+            <Object id="skybox2" pos="0 0 0" lighting="false" scale="3000 3000 3000" rotate_axis="0.000 1.000 0.000" rotate_deg_per_sec="0.5" locked="true" />
 
-            <Object id="cube" js_id="elevator" onclick="room.elevators['elevator'].activate()" collision_id="cube" pos="28.2 14.6 -9" xdir="-0.99 -0.12 0.07" ydir="-0.11 0.98 0.17" zdir="-0.09 0.16 -0.98" scale="2.1 1 4.7" col="0.208 0.18 0.141" lighting="false" shader="" />
+            <Object id="cube" js_id="elevator" onclick="room.elevators['elevator'].activate()" collision_id="cube" pos="28.2 14.6 -9" xdir="-0.99 -0.12 0.07" ydir="-0.11 0.98 0.17" zdir="-0.09 0.16 -0.98" scale="2.1 1 4.7" col="0.208 0.18 0.141" lighting="false" />
 
             <!--<Paragraph js_id="debugText" pos="32.6 17.8 -3.9" fwd="0 0 -1" col="0.5 0.8 0.5" scale="2 2 2" locked="false" lighting="false">Debug window</Paragraph>-->
 
-            <Object id="cube" js_id="elevator2" onclick="room.elevators['elevator2'].activate()" collision_id="cube" pos="25.6 14.9 -9.7" scale="2.1 1 4.7" col="0.208 0.18 0.141" lighting="false" shader="" />
+            <Object id="cube" js_id="elevator2" onclick="room.elevators['elevator2'].activate()" collision_id="cube" pos="25.6 14.9 -9.7" scale="2.1 1 4.7" col="0.208 0.18 0.141" lighting="false" />
+
+            <Object id="shadercube" collision_id="shadercube" pos="45.4 10.6 -29.4" scale="5 5 5" lighting="false" shader_id="mystical-shader" />
+
 
             <!--<Object id="zombie" collision_id="zombie" pos="28.2 15.6 -12.7"  scale="1 1 1" lighting="false" shader="" col="1 0.85 0" />
             <Object id="zombie-slow" collision_id="zombie-slow" pos="37 16 -12.7"  scale="1 1 1" lighting="false" shader="" col="1 0.85 0" />
             <Object id="zombie-fire" collision_id="zombie-fire" pos="37 16.1 -19"  scale="1 1 1" lighting="false" shader="" col="1 0.85 0" />
             <Object id="zombie-fast" collision_id="zombie-fast" pos="48.4 15.7 -15.6"  scale="1 1 1" lighting="false" shader="" col="1 0.85 0" />-->
 
-            <Object id="landscape" locked="true" collision_id="landscape-collision" pos="0 -0.7 0" scale="10 10 10" shader_id="" lighting="false" />
+            <Object id="landscape" locked="true" collision_id="landscape-collision" pos="0 -0.7 0" scale="10 10 10" lighting="false" />
         </Room>
     </FireBoxRoom>
 
