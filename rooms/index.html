@@ -17,8 +17,11 @@
 
             <AssetSound id="ambient-music" src="http://ice.somafm.com/dronezone" />
 
+            <AssetObject id="blank" src="models/blank.obj"/>
+
             <AssetObject id="landscape-collision" src="models/landscape-collision.obj"/>
             <AssetObject id="landscape" src="models/landscape.dae"/>
+
             <AssetObject id="skybox" src="models/skybox/skybox.dae"/>
             <AssetObject id="skybox2" src="models/skybox2/skybox.dae"/>
 
@@ -29,9 +32,23 @@
             <AssetImage id='right' src='img/skybox/wastes-skybox-up.png' tex_clamp='true' />
             <AssetImage id='left' src='img/skybox/wastes-skybox-up.png' tex_clamp='true' />
 
+            <AssetGhost id="sand-lurker" src="ghosts/sand-lurker.ghost" />
+
+            <AssetObject id="zombie" src="models/zombies/zombie_normal.obj" mtl="models/zombies/zombie_normal.mtl" />
+
+            <AssetObject id="zombie-slow" src="models/zombies/zombie_slow.obj" mtl="models/zombies/zombie_slow.mtl" />
+
+            <AssetObject id="zombie-fire" src="models/zombies/zombie_fire.obj" mtl="models/zombies/zombie_fire.mtl" />
+
+            <AssetObject id="zombie-fast" src="models/zombies/zombie_fast.obj" mtl="models/zombies/zombie_fast.mtl" />
+
+            <AssetObject id="zombie-axe" src="models/zombies/zombie_axe.obj" mtl="models/zombies/zombie_axe.mtl" />
+
         </Assets>
 
         <Room fog="true" fog_col="0.839 0.667 0.522" fog_mode="exp" fog_density="0.005" near_dist="0.010" far_dist="100000.000" locked="false" use_local_asset="room_plane" visible="true" skybox_left_id="left" skybox_right_id="right" skybox_front_id="front" skybox_back_id="back" skybox_up_id="up" skybox_down_id="down" default_sounds="false" walk_speed="5.0" run_speed="10.0" col="0.208 0.157 0.122" pos="39.4 16.7 -3.7" fwd="0 0 -1">
+
+            <Ghost id="sand-lurker" cull_face="none" shader_id="" head_id="" head_pos="0 -10 0" body_id="blank" scale="50 50 50" col="0.208 0.18 0.141" loop="true" auto_play="true" lighting="false" rotate_axis="0.000 1.000 0.000" rotate_deg_per_sec="15" />
 
             <Sound id="ambient-music" rect="-100 -50 100 50" loop="true" />
 
@@ -41,7 +58,15 @@
 
             <Object id="cube" js_id="elevator" onclick="room.elevClick()" collision_id="cube" pos="28.2 14.6 -9" xdir="-0.99 -0.12 0.07" ydir="-0.11 0.98 0.17" zdir="-0.09 0.16 -0.98" scale="2.1 1 4.7" col="0.208 0.18 0.141" lighting="false" shader="" />
 
-            <Object id="landscape" locked="false" collision_id="landscape-collision" pos="0 -0.7 0" scale="10 10 10" shader_id="" lighting="false" />
+            <Object id="zombie" collision_id="zombie" pos="28.2 15.6 -12.7"  scale="1 1 1" lighting="false" shader="" col="1 0.85 0" />
+
+            <Object id="zombie-slow" collision_id="zombie-slow" pos="37 16 -12.7"  scale="1 1 1" lighting="false" shader="" col="1 0.85 0" />
+
+            <Object id="zombie-fire" collision_id="zombie-fire" pos="37 16.1 -19"  scale="1 1 1" lighting="false" shader="" col="1 0.85 0" />
+
+            <Object id="zombie-fast" collision_id="zombie-fast" pos="48.4 15.7 -15.6"  scale="1 1 1" lighting="false" shader="" col="1 0.85 0" />
+
+            <Object id="landscape" locked="true" collision_id="landscape-collision" pos="0 -0.7 0" scale="10 10 10" shader_id="" lighting="false" />
         </Room>
     </FireBoxRoom>
 
