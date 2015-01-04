@@ -1,18 +1,20 @@
-#version 110
+#version 150
 
-precision mediump float;
+// converted to version 150 by HAZARDU5 (michael@uxvirtual.com)
+
+const int MAX_RAY_STEPS = 64;
+const float RAY_STOP_TRESHOLD = 0.001;
+const int MENGER_ITERATIONS = 3;
 
 uniform int iLeftEye; //rendering left eye (0 - no, 1 - yes)?
 uniform float iGlobalTime; //number of seconds that passed since shader was compiled
 uniform int iUseClipPlane; //use clip plane (0 - no, 1 - yes)?  (i.e. is the room viewed through a portal)
 uniform vec4 iClipPlane; //equation of clip plane (xyz are normal, w is the offset, room is on side facing normal)
 
-varying vec3 iPosition; //interpolated vertex position (note: not multiplied with modelview matrix)
-varying vec3 iPositionWorld; //gl_ModelViewMatrix * gl_Vertex * iViewMatrixInverse
+in vec3 iPosition; //interpolated vertex position (note: not multiplied with modelview matrix)
+in vec3 iPositionWorld; //gl_ModelViewMatrix * gl_Vertex * iViewMatrixInverse
 
-const int MAX_RAY_STEPS = 64;
-const float RAY_STOP_TRESHOLD = 0.001;
-const int MENGER_ITERATIONS = 3;
+out vec4 FragColor;
 
 float maxcomp(vec2 v) { return max(v.x, v.y); }
 
@@ -104,5 +106,5 @@ void main(void)
     // Colour of output pixel dependant on the number of iterations needed to resolve the raymarch
     vec4 PathTraceColor = colorize(pow(float(stepsTaken) / float(MAX_RAY_STEPS), 1.0));
 
-    gl_FragColor = PathTraceColor;
+    FragColor = PathTraceColor;
 }

@@ -1,21 +1,28 @@
 #version 150
-//cake242222s23
 
-//required if running shader in OpenGL ES
-#ifdef GL_ES
-precision mediump float;
-precision mediump int;
-#endif
+// see here for information on version 150 glsl shaders:
+// http://en.wikipedia.org/wiki/OpenGL_Shading_Language#A_sample_trivial_GLSL_fragment_shader
+// https://github.com/mattdesl/lwjgl-basics/wiki/GLSL-Versions
+// https://www.opengl.org/wiki/GLSL_:_common_mistakes
 
-uniform vec3      iResolution;           // viewport resolution (in pixels)
-uniform float     iGlobalTime;           // shader playback time (in seconds)
+uniform int MAX_RAY_STEPS = 64;
+uniform float RAY_STOP_TRESHOLD = 0.0001;
+uniform int MENGER_ITERATIONS = 5;
 
-const int MAX_RAY_STEPS = 64;
-const float RAY_STOP_TRESHOLD = 0.0001;
-const int MENGER_ITERATIONS = 5;
+// in glsl 150+ input variables are defined as below
+//in vec2 iResolution;
+uniform vec2 iResolution = vec2(1920.0,1080.0); // viewport resolution (in pixels) - note vertex shader does not pass this to fragment shader in JanusVR for some reason!
+uniform float iGlobalTime;           // shader playback time (in seconds)
 
+// in glsl 150+ gl_FragColor is no longer accesible globally and you must instead set your own output for fragment
+// shaders (see end of main())
+// name of the output variable in the shader program, which is associated with the given buffer.
 
-float maxcomp(vec2 v) { return max(v.x, v.y); }
+out vec4 FragColor;
+
+float maxcomp(vec2 v) {
+    return max(v.x, v.y);
+}
 
 float sdCross(vec3 p) {
     p = abs(p);
@@ -92,5 +99,5 @@ void main(void)
 
     vec4 color = colorize(pow(float(stepsTaken) / float(MAX_RAY_STEPS), 0.9));
 
-    gl_FragColor = color;
+    FragColor = color;
 }
