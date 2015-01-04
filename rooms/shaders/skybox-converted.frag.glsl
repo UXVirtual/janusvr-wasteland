@@ -9,6 +9,9 @@ uniform int MAX_RAY_STEPS = 64;
 uniform float RAY_STOP_TRESHOLD = 0.0001;
 uniform int MENGER_ITERATIONS = 5;
 
+in vec3 iPosition; //interpolated vertex position (note: not multiplied with modelview matrix)
+in vec3 iPositionWorld; //gl_ModelViewMatrix * gl_Vertex * iViewMatrixInverse
+
 // in glsl 150+ input variables are defined as below
 //in vec2 iResolution;
 uniform vec2 iResolution = vec2(1920.0,1080.0); // viewport resolution (in pixels) - note vertex shader does not pass this to fragment shader in JanusVR for some reason!
@@ -77,7 +80,13 @@ void main(void)
 
     vec3 cameraPos = vec3(0.16 * sin(iGlobalTime), 0.16 * cos(iGlobalTime), iGlobalTime);
     //vec3 cameraPos = vec3(0.0);
-    vec3 cameraDir = vec3(0.0, 0.0, 1.0);
+
+
+    // NOTE: cameraDir uses iPosition to determine location to project onto otherwise all sizes of object with shader
+    // applied will look like a single flat plane
+
+    //vec3 cameraDir = vec3(0.0, 0.0, 1.0);
+    vec3 cameraDir = iPosition;
     vec3 cameraPlaneU = vec3(1.0, 0.0, 0.0);
     vec3 cameraPlaneV = vec3(0.0, 1.0, 0.0) * (iResolution.y / iResolution.x);
 

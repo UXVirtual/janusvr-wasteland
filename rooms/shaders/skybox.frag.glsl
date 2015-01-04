@@ -95,13 +95,13 @@ void main(void)
     float dist = scene(rayPos);
     int stepsTaken;
     for (int i = 0; i < MAX_RAY_STEPS; i++) {
-    if (dist < RAY_STOP_TRESHOLD) {
-        continue;
+        if (dist < RAY_STOP_TRESHOLD) {
+            continue;
+        }
+        rayPos += rayDir * dist;
+        dist = scene(rayPos);
+        stepsTaken = i;
     }
-    rayPos += rayDir * dist;
-    dist = scene(rayPos);
-    stepsTaken = i;
-}
 
     // Colour of output pixel dependant on the number of iterations needed to resolve the raymarch
     vec4 PathTraceColor = colorize(pow(float(stepsTaken) / float(MAX_RAY_STEPS), 1.0));
