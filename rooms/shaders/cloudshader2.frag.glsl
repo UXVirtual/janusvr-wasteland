@@ -1,11 +1,21 @@
 #version 150
 
-//test2
+/**
+*
+* Cloud Shader
+*
+* Experimenting with perlin terrain. Height determines color. Modified a perlin function to support multiple octaves.
+* Threw clouds and water in for presentation. Next step is to do some lighting.
+*
+* @author dancingplatypus (https://www.shadertoy.com/user/dancingplatypus)
+* @url https://www.shadertoy.com/view/MsXSDN
+*
+*/
 
 #define M_PI 3.1415926535897932384626433832795
 
 const int OCTAVE_COUNT = 5;
-const float WATER_LEVEL = 0.3;
+const float WATER_LEVEL = 0;
 
 //in vec2      iResolution;           // viewport resolution (in pixels)
 uniform vec2 iResolution = vec2(1920.0,1080.0);
@@ -156,7 +166,7 @@ void main(void)
 	uv = floor(uv * order) / order;
 	water_uv = floor(water_uv * order) / order;
 
-	vec2 mouseDeflection = vec2(iMouse.x / iResolution.x - 0.5, iMouse.y / iResolution.y - 0.5);
+	vec2 mouseDeflection = vec2(iPosition.x / iResolution.x - 0.5, iPosition.y / iResolution.y - 0.5);
 
 	// Super simple sun calculation.
 	// sample a patch to the right of us.  If it's higher, make us darker.  If it's lower, make us lighter.
@@ -165,6 +175,7 @@ void main(void)
 	//vec3 samplePointA = vec3(uv.x + mouseDeflection.x * iGlobalTime, uv.y + mouseDeflection.y * iGlobalTime, 0.00 * iGlobalTime);
 	vec3 samplePointA = iPosition;
 	vec3 samplePointB = samplePointA + vec3((gl_FragCoord.x + 1.0) / iResolution.x * land_feature / zoom + mouseDeflection.x * iGlobalTime, 0.0, 0.0);
+	//vec3 samplePointB = samplePointA + iPosition;
 	float noiseA = noise(samplePointA);
 	float noiseB = noise(samplePointB);
 	float diff = noiseB - noiseA;
@@ -176,12 +187,15 @@ void main(void)
 						 cloud_uv.y + mouseDeflection.y * iGlobalTime,
 						 0.05 * iGlobalTime));
 
-	// vec3 landColor = clamp(vec3(0.93, 0.82, 0.65) * (1.0 + 0.2 * diff), vec3(0.0,0.0,0.0), vec3(1.0,1.0,1.0));
-	vec3 landColor = vec3(0.73, 0.62, 0.45) * (noiseA * (1.0 + diff));
+	 //vec3 landColor = clamp(vec3(0.93, 0.82, 0.65) * (1.0 + 0.2 * diff), vec3(0.0,0.0,0.0), vec3(1.0,1.0,1.0));
+
+
+	//vec3 landColor = vec3(0.73, 0.62, 0.45) * (noiseA * (1.0 + diff));
+	vec3 landColor = vec3(0.71,0,1) * (noiseB * (1.0 + diff));
 	// vec3 forestColor = vec3(0.93, 0.82, 0.65);
 	// vec3 mountainColor = vec3(0.93, 0.93, 0.93);
-	vec3 waterColor = vec3(0.65, 0.94, 0.94);
-	vec4 cloudColor = vec4(1, 1, 1, pow(cloud, 6.0));
+	vec3 waterColor = vec3(0.71,0,1);
+	vec4 cloudColor = vec4(0.71,0,1, pow(cloud, 6.0));
 
 	// fix for water level
 
