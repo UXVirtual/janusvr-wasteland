@@ -33,6 +33,9 @@ module.exports = function(grunt) {
                     uniqueId: true,
                     removeKey: true,
 
+                    //bower libraries in bower_components
+                    TWEEN: true,
+
                     //custom classes in src/lib/classes
                     Elevator: true
                 }
@@ -52,7 +55,7 @@ module.exports = function(grunt) {
             wasteland: {
                 files: {
                     //output JS file path, input array of JS file paths to combine
-                    'js/wasteland.min.js': ['src/lib/classes/elevator.js','src/rooms/wasteland/main.js']
+                    'js/wasteland.min.js': ['bower_components/TWEEN/build/tween.min.js','src/lib/classes/elevator.js','src/rooms/wasteland/main.js']
                 }
             }
 
@@ -67,7 +70,10 @@ module.exports = function(grunt) {
                 }
             },
             glsl:{
-                files: ['shaders/*.glsl'],
+                //only processing fragment shaders as JanusVR does not support vertex shaders higher than #version 130
+                //and glsl-validate cannot compile shaders earlier than #version 150 - use JanusVR error_log.txt output
+                //to check for glsl errors instead
+                files: ['shaders/*.frag.glsl'],
                 options: {
                     livereload: false,
                     nospawn: true
@@ -78,10 +84,25 @@ module.exports = function(grunt) {
 
             glsl: {
                 command: function(filepath){
-                    return '../tools/glsl-validate '+filepath+' +profile=fragment';
-                },
-                callback: function(){
-                    //grunt.log.writeln('file is valid');
+
+                    var splitPath = filepath.split('.');
+
+                    var shaderType = splitPath[splitPath.length-2];
+
+                    var profile;
+
+                    switch(shaderType){
+                        case 'frag':
+                        case 'fragment':
+                            profile = 'fragment';
+                            break;
+                        case 'vertex':
+                        case 'vert':
+                            profile = 'vertex';
+                            break;
+                    }
+
+                    return '../tools/glsl-validate '+filepath+' +profile='+profile;
                 },
                 stdout: true,
                 stderr: true,

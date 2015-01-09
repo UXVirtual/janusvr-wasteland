@@ -14,7 +14,7 @@ room.elevators = {
 };
 
 room.log = function(text){
-    //room.objects.debugText.text = text;
+    room.objects.debugText.text = text;
 };
 
 
@@ -25,6 +25,20 @@ room.log = function(text){
  * steps into the room.
  */
 room.onEnter = function(){
+
+
+
+    var tween = new TWEEN.Tween( {
+            y: room.objects.cubetest.pos.y
+        })
+        .to( { y: 70 }, 10000 )
+        .easing( TWEEN.Easing.Elastic.InOut )
+        .onUpdate( function () {
+
+            room.objects.cubetest.pos.y = this.y;
+
+        } )
+        .start();
 
 };
 
@@ -37,9 +51,28 @@ room.onEnter = function(){
  * speed regardless of framerate.
  */
 room.update = function(dt){
+
+    //test; // jshint ignore:line
+
+
+
+    //room.log('tween length: '+TWEEN._tweens.length);
+
+
+
     for(var elevator in room.elevators){
         room.elevators[elevator].update();
     }
+
+
+    var tweenSuccess = TWEEN.update(dt);
+
+
+
+    //room.log('tween success: '+tweenSuccess);
+
+
+    //room.objects.cubetest.pos.y = 40;
 };
 
 /**

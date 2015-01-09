@@ -1,3 +1,4 @@
 /rooms/node_modules
 /rooms/js/*
 /rooms/npm-debug.log
+/rooms/bower_components/

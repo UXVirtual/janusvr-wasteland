@@ -8,8 +8,10 @@ Installation
 ------------
 
 1. Install [node.js](http://www.nodejs.org/).
-2. Intall grunt-cli by running `npm install -g grunt-cli` from the terminal. Depending on your system configuration you may need to run this command with `sudo`.
+2. Install grunt-cli by running `npm install -g grunt-cli` from the terminal. Depending on your system configuration you may need to run this command with `sudo`.
 3. Install project dependencies by running `npm install` from the `rooms` folder of the repository.
+4. Install [bower](http://bower.io/) by running `npm install -g bower`. If install fails try running it with `sudo`.
+5. Run
 
 
 Building

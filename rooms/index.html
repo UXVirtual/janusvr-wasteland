@@ -35,6 +35,16 @@
             <AssetImage id='right' src='img/skybox/wastes-skybox-up.png' tex_clamp='true' />
             <AssetImage id='left' src='img/skybox/wastes-skybox-up.png' tex_clamp='true' />
 
+            <AssetObject id="monster18_head" src="http://vrsites.com/avatars/chibimon/moster01_head.obj" tex="http://vrsites.com/avatars/chibimon/monster_18.jpg" />
+            <AssetObject id="monster18_body" src="http://vrsites.com/avatars/chibimon/moster01_body.obj" tex="http://vrsites.com/avatars/chibimon/monster_18.jpg" />
+
+            <AssetObject id="monster1_head" src="http://vrsites.com/avatars/chibimon/moster01_head.obj" tex="http://vrsites.com/avatars/chibimon/monster_01.jpg" />
+            <AssetObject id="monster1_body" src="http://vrsites.com/avatars/chibimon/moster01_body.obj" tex="http://vrsites.com/avatars/chibimon/monster_01.jpg" />
+
+
+            <AssetGhost id="Billy Bob" src="ghosts/ghost18.ghost" />
+
+
             <AssetGhost id="sand-lurker" src="ghosts/sand-lurker.ghost" />
 
             <!--<AssetObject id="zombie" src="models/zombies/zombie_normal.obj" mtl="models/zombies/zombie_normal.mtl" />
@@ -49,6 +59,11 @@
 
             <Ghost id="sand-lurker" cull_face="none" shader_id="" head_id="" head_pos="0 -10 0" body_id="blank" scale="50 50 50" col="0.208 0.18 0.141" loop="true" auto_play="true" lighting="false" rotate_axis="0.000 1.000 0.000" rotate_deg_per_sec="15" />
 
+            <Ghost auto_play="false" js_id="billy-bob" id="Billy Bob" head_id="monster18_head" body_id="monster18_body" scale="1.4 1.4 1.4" lighting="false" head_pos="0 0.2 0"/>
+
+            <Object id="cube" js_id="cubetest" pos="28.2 15.6 -9" collision_id="cube" lighting="false" scale="1 1 1" col="1 1 1" />
+
+
             <Sound id="ambient-music" rect="-100 -50 100 50" loop="true" />
 
             <Object id="dust-devil" pos="33 11 -35" scale="4 4 4" lighting="false" rotate_axis="0.000 1.000 0.000" rotate_deg_per_sec="120" />
@@ -61,7 +76,7 @@
 
             <Object id="cube" js_id="elevator" onclick="room.elevators['elevator'].activate()" collision_id="cube" pos="28.2 14.6 -9" xdir="-0.99 -0.12 0.07" ydir="-0.11 0.98 0.17" zdir="-0.09 0.16 -0.98" scale="2.1 1 4.7" col="0.208 0.18 0.141" lighting="false" />
 
-            <!--<Paragraph js_id="debugText" pos="32.6 17.8 -3.9" fwd="0 0 -1" col="0.5 0.8 0.5" scale="2 2 2" locked="false" lighting="false">Debug window</Paragraph>-->
+            <Paragraph js_id="debugText" pos="32.6 17.8 -3.9" fwd="0 0 -1" col="0.5 0.8 0.5" scale="2 2 2" locked="false" lighting="false">Debug window</Paragraph>
 
             <Object id="cube" js_id="elevator2" onclick="room.elevators['elevator2'].activate()" collision_id="cube" pos="25.6 14.9 -9.7" scale="2.1 1 4.7" col="0.208 0.18 0.141" lighting="false" />
 

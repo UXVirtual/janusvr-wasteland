@@ -26,123 +26,123 @@ var Elevator = function(id,stops,cycleInterval) {
     this.stops = stops;
 
     this.id = id;
+};
 
-    /**
-     * Activate
-     *
-     * Activates the elevator
-     */
-    this.activate = function(){
+/**
+ * Activate
+ *
+ * Activates the elevator
+ */
+Elevator.prototype.activate = function(){
 
 
 
-        if (this.activated === 0)
+    if (this.activated === 0)
+    {
+        if (this.direction === 1) //Upwards
         {
-            if (this.direction === 1) //Upwards
+            //this.room.log('cycle interval hit '+this.timer);
+
+
+
+            if (this.goToStop+1 >= this.stops.length) //If the next stop is larger than the array of stops
             {
-                //this.room.log('cycle interval hit '+this.timer);
-
-
-
-                if (this.goToStop+1 >= this.stops.length) //If the next stop is larger than the array of stops
-                {
-                    this.goToStop -= 1; //Set the next stop for below you
-                    this.direction = 0; //Set the direction to down
-                }
-                else
-                {
-                    this.goToStop += 1; //Otherwise, if space above you, ascend.
-                }
-            }
-            else //Downwards
-            {
-                if (this.goToStop-1 < 0)  //If next stop is below first array index
-                {
-                    this.goToStop += 1; //Set the next stop for above you
-                    this.direction = 1; //Set direction to up
-                }
-                else
-                {
-                    this.goToStop -= 1; //Otherwise, let you go down.
-                }
-            }
-            this.timer = 0;
-            this.activated = 1; //Activate elevator
-        }
-    };
-
-    /**
-     * Update
-     *
-     * Updates the elevator position based on its current movement path
-     */
-    this.update = function(){
-        var moveSpeed;
-
-
-
-
-        if (this.cycleInterval !== -1)
-        {
-
-
-            if (this.timer > this.cycleInterval)
-            {
-
-                //debugger; // jshint ignore:line
-                this.activate();
+                this.goToStop -= 1; //Set the next stop for below you
+                this.direction = 0; //Set the direction to down
             }
             else
             {
-                this.timer += 1;
+                this.goToStop += 1; //Otherwise, if space above you, ascend.
             }
         }
-
-        if (this.activated === 1)
+        else //Downwards
         {
-            if (this.direction === 1) //if moving upwards
+            if (this.goToStop-1 < 0)  //If next stop is below first array index
             {
-                moveSpeed = +0.05; //Set moveSpeed (referenced when moving elevator)
+                this.goToStop += 1; //Set the next stop for above you
+                this.direction = 1; //Set direction to up
+            }
+            else
+            {
+                this.goToStop -= 1; //Otherwise, let you go down.
+            }
+        }
+        this.timer = 0;
+        this.activated = 1; //Activate elevator
+    }
+};
 
-                for(var i = this.goToStop; i <= this.stops.length; i++) //start loop beginning index to next stop
-                {
-                    if (this.room.objects[this.id].pos.y > this.stops[i]) //if elevator next stop is smaller than elevator elevation
-                    {
-                        this.activated = 0; //disable elevator
-                        break;
-                    }
-                }
-            }
-            else //if moving down
-            {
-                moveSpeed = -0.05;
-                for(var x = this.goToStop; x >= 0; x--) //start loop beginning index to next stop
-                {
-                    if (this.room.objects[this.id].pos.y < this.stops[x]) //if elevator next stop is smaller than elevator elevation
-                    {
-                        this.activated = 0; //disable elevator
-                        break;
-                    }
-                }
-            }
+/**
+ * Update
+ *
+ * Updates the elevator position based on its current movement path
+ */
+Elevator.prototype.update = function(){
+    var moveSpeed;
+
+
+
+
+    if (this.cycleInterval !== -1)
+    {
+
+
+        if (this.timer > this.cycleInterval)
+        {
+
+            //debugger; // jshint ignore:line
+            this.activate();
         }
         else
         {
-            moveSpeed = 0;
+            this.timer += 1;
         }
+    }
 
-
-        if (this.activated === 1) //Update elevator height
+    if (this.activated === 1)
+    {
+        if (this.direction === 1) //if moving upwards
         {
-            this.room.objects[this.id].pos.y += moveSpeed;
+            moveSpeed = +0.05; //Set moveSpeed (referenced when moving elevator)
+
+            for(var i = this.goToStop; i <= this.stops.length; i++) //start loop beginning index to next stop
+            {
+                if (this.room.objects[this.id].pos.y > this.stops[i]) //if elevator next stop is smaller than elevator elevation
+                {
+                    this.activated = 0; //disable elevator
+                    break;
+                }
+            }
         }
-        else
+        else //if moving down
         {
-            this.room.objects[this.id].pos.y = this.stops[this.goToStop]; //Clip to the current stop
+            moveSpeed = -0.05;
+            for(var x = this.goToStop; x >= 0; x--) //start loop beginning index to next stop
+            {
+                if (this.room.objects[this.id].pos.y < this.stops[x]) //if elevator next stop is smaller than elevator elevation
+                {
+                    this.activated = 0; //disable elevator
+                    break;
+                }
+            }
         }
+    }
+    else
+    {
+        moveSpeed = 0;
+    }
 
-        this.room.log('next stop: '+(this.goToStop+1)+ ' length: '+this.stops.length+' activated: '+this.activated+' direction: '+((this.direction === 1) ? 'up' : 'down'));
 
-        //this.room.log(this.timer);
-    };
+    if (this.activated === 1) //Update elevator height
+    {
+        this.room.objects[this.id].pos.y += moveSpeed;
+    }
+    else
+    {
+        this.room.objects[this.id].pos.y = this.stops[this.goToStop]; //Clip to the current stop
+    }
+
+    //this.room.log('next stop: '+(this.goToStop+1)+ ' length: '+this.stops.length+' activated: '+this.activated+' direction: '+((this.direction === 1) ? 'up' : 'down'));
+
+    //this.room.log(this.timer);
 };
