@@ -2,3 +2,4 @@
 /rooms/js/*
 /rooms/npm-debug.log
 /rooms/bower_components/
+/rooms/vendor/*

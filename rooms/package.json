@@ -1,20 +1,23 @@
 {
-    "name": "janusvr-wasteland",
-    "version": "0.0.1",
-    "description": "JanusVR desert wasteland themed environment.",
-    "main": "start.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "Michael <michael@uxvirtual.com>",
-    "license": "MIT",
-    "dependencies": {
-        "grunt": "~0.4.5",
-        "grunt-contrib-jshint": "~0.10.0",
-        "grunt-contrib-nodeunit": "~0.4.1",
-        "grunt-contrib-uglify": "~0.7.0",
-        "grunt-contrib-watch": "~0.6.1",
-        "grunt-exec": "~0.4.6",
-        "bower": "~1.3.12"
-    }
+  "name": "janusvr-wasteland",
+  "version": "0.0.1",
+  "description": "JanusVR desert wasteland themed environment.",
+  "main": "start.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Michael <michael@uxvirtual.com>",
+  "license": "MIT",
+  "dependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-nodeunit": "~0.4.1",
+    "grunt-contrib-uglify": "~0.7.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-exec": "~0.4.6",
+    "bower": "~1.3.12"
+  },
+  "devDependencies": {
+    "grunt-browserify": "^3.3.0"
+  }
 }

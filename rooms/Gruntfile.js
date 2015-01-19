@@ -1,10 +1,46 @@
-var module;
+if(typeof module === 'undefined'){
+    var module;
+}
 
 module.exports = function(grunt) {
 
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+
+
+        browserify: {
+            wasteland: {
+                src: [
+                    'node_modules/cave-automata-2d/index.js',
+                    'node_modules/cave-automata-2d/**/moore/index.js',
+                    'node_modules/cave-automata-2d/**/ndarray-fill/index.js',
+                    'node_modules/cave-automata-2d/**/cwise/cwise.js',
+                    'node_modules/cave-automata-2d/**/cwise-compiler/compiler.js',
+                    'node_modules/cave-automata-2d/**/cwise-compiler/lib/compile.js',
+                    'node_modules/cave-automata-2d/**/cwise-compiler/lib/thunk.js',
+                    'node_modules/cave-automata-2d/**/uniq/uniq.js',
+                    'node_modules/cave-automata-2d/**/cwise-parser/index.js',
+                    'node_modules/cave-automata-2d/**/esprima/esprima.js',
+                    'node_modules/cave-automata-2d/**/dup/dup.js',
+                    'node_modules/cave-automata-2d/**/zeros/zeros.js'//
+
+                ],
+                //src: [],
+                dest: 'vendor/cave-automata-2d/module.js',///
+//
+
+                options: {
+                    exclude: [
+                        'node_modules/cave-automata-2d/**/test.js',
+                        'node_modules/cave-automata-2d/**/eyeball-test.js',
+                        'node_modules/cave-automata-2d/**/test/*.js'
+                    ]
+                }
+            }
+        },
+
+
         jshint: {
             files: ["Gruntfile.js", "src/**/*.js"],
             // configuration options for jshint parsing. For a full explanation of what these do see the URL below:
@@ -64,7 +100,7 @@ module.exports = function(grunt) {
         watch: {
             js: {
                 files: ["<%= jshint.files %>"],
-                tasks: ["jshint", "uglify"],
+                tasks: ["jshint", 'browserify', "uglify"],
                 options: {
                     livereload: false
                 }
@@ -132,8 +168,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-exec');
+    grunt.loadNpmTasks('grunt-browserify');
+
 
     // Default task(s).
-    grunt.registerTask('default', ['jshint','uglify']);
+    grunt.registerTask('default', ['jshint','browserify','uglify']);
 
 };
