@@ -64,6 +64,7 @@ module.exports = function(grunt) {
                 globals: {
                     'debugger': true,
                     room: true,
+
                     debug: true,
                     print: true,
                     uniqueId: true,
@@ -73,11 +74,12 @@ module.exports = function(grunt) {
                     TWEEN: true,
 
                     //compiled node libraries in vendor
-                    generate: true,
-                    ndarray: true,
+
 
                     //custom classes in src/lib/classes
-                    Elevator: true
+                    Elevator: true,
+                    Logger: true,
+                    StringTools: true
                 }
             }
 
@@ -96,7 +98,7 @@ module.exports = function(grunt) {
             wasteland: {
                 files: {
                     //output JS file path, input array of JS file paths to combine
-                    'js/wasteland.min.js': ['bower_components/TWEEN/build/tween.min.js','src/lib/classes/elevator.js','src/rooms/wasteland/main.js']
+                    'js/wasteland.min.js': ['src/lib/classes/Logger.js','src/lib/classes/StringTools.js','bower_components/TWEEN/src/Tween.js','src/lib/classes/Elevator.js','src/rooms/wasteland/main.js']
                 }
             }
 

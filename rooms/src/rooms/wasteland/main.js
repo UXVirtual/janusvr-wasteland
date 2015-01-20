@@ -13,53 +13,75 @@ room.elevators = {
     elevator2: new Elevator('elevator2',[30, 74],20)
 };
 
-room.log = function(text){
-    room.objects.debugText.text = text;
+room.log = function(logs){
+
+    var output = '';
+
+    if(typeof logs === 'string'){
+        output = logs;
+    }else if(Object.prototype.toString.call( logs ) === '[object Array]'){
+        for(var i = 0; i < logs.length; i++){
+            output += StringTools.pad(logs[i].print(),200,'_',StringTools.STR_PAD_RIGHT);
+        }
+    }
+
+    room.objects.debugText.text = output;
 };
 
 
+var tween;
+
+Logger.config.maxLogs = 5;
 
 
+
+var firstRun = false;
+
+room.firstRun = function(){
+    if(!firstRun){
+
+
+
+        tween = new TWEEN.Tween( {
+            y: room.objects.cubetest.pos.y
+        })
+            .to( { y: 70 }, 2000 )
+            .yoyo(true)
+            .repeat(Infinity)
+            .easing(TWEEN.Easing.Quadratic.In)
+            .onUpdate( function () {
+                Logger.log('y: '+this.y);
+                room.objects.cubetest.pos.y = this.y;
+
+            } )
+            .onStart(function() {
+                Logger.log('tween started: ');
+            })
+            .onStop(function() {
+                Logger.log('tween stopped: ');
+            })
+            .start();
+
+        firstRun = true;
+    }
+};
 
 /**
  * On Enter
  *
  * Invoked before the first update of the room. Note that this is not when the room is loaded, but when the user first
  * steps into the room.
+ *
+ * Note: onEnter() appears to be slightly buggy - tweens won't work here. Instead place these tweens inside room.update()
+ * and run them once.
  */
 room.onEnter = function(){
 
 
+    Logger.log('Entered room');
 
-    /*var tween = new TWEEN.Tween( {
-            y: room.objects.cubetest.pos.y
-        })
-        .to( { y: 70 }, 10000 )
-        .easing( TWEEN.Easing.Elastic.InOut )
-        .onUpdate( function () {
 
-            room.objects.cubetest.pos.y = this.y;
 
-        } )
-        .start();*/
-
-    var width = 10;
-    var height = 10;
-    var grid = ndarray.zeros([ width, height ]);
-
-    // Fill the grid with random points,
-    // returning an "iterate" method.
-    var iterate = generate(grid, {
-        density: 0.5,
-        threshold: 5,
-        hood: 1,
-        fill: true
-    });
-
-    // Iterate the grid five times to generate
-    // a smooth-ish layout.
-    var array = iterate(5);
-    room.log('iterate length: '+array.length);
 
 };
 
@@ -73,27 +95,41 @@ room.onEnter = function(){
  */
 room.update = function(dt){
 
-    //test; // jshint ignore:line
+    room.firstRun();
+
+    //Logger.log('update: '+Date.now());
 
 
 
     //room.log('tween length: '+TWEEN._tweens.length);
 
-
+    //room.log('mep');
+    //room.log(['cake','cake2','cake3']);
 
     for(var elevator in room.elevators){
         room.elevators[elevator].update();
     }
 
 
-    var tweenSuccess = TWEEN.update(dt);
+    var tweenSuccess = TWEEN.update();
 
+
+
+
+
+    //room.log('update: '+Date.now()+' '+tweenSuccess);
 
 
     //room.log('tween success: '+tweenSuccess);
 
 
     //room.objects.cubetest.pos.y = 40;
+
+
+
+    //output currently stored logs to Paragraph in room
+    room.log(Logger.get.logsOfLevel(0));
+
 };
 
 /**
