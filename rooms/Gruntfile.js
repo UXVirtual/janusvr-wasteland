@@ -10,42 +10,42 @@ module.exports = function(grunt) {
 
 
         browserify: {
-            wasteland: {
-                src: [
-                    'node_modules/cave-automata-2d/index.js',
-                    'node_modules/cave-automata-2d/**/moore/index.js',
-                    'node_modules/cave-automata-2d/**/ndarray-fill/index.js',
-                    'node_modules/cave-automata-2d/**/cwise/cwise.js',
-                    'node_modules/cave-automata-2d/**/cwise-compiler/compiler.js',
-                    'node_modules/cave-automata-2d/**/cwise-compiler/lib/compile.js',
-                    'node_modules/cave-automata-2d/**/cwise-compiler/lib/thunk.js',
-                    'node_modules/cave-automata-2d/**/uniq/uniq.js',
-                    'node_modules/cave-automata-2d/**/cwise-parser/index.js',
-                    'node_modules/cave-automata-2d/**/esprima/esprima.js',
-                    'node_modules/cave-automata-2d/**/dup/dup.js',
-                    'node_modules/cave-automata-2d/**/zeros/zeros.js'//
+            //'cave-automata-2d': {
+            //    src: [
+            //        'ndarray',
+            //        'node_modules/cave-automata-2d/index.js:cave',
+            //        'node_modules/cave-automata-2d/**/moore/index.js',
+            //        'node_modules/cave-automata-2d/**/ndarray-fill/index.js',
+            //        'node_modules/cave-automata-2d/**/cwise/cwise.js',
+            //        'node_modules/cave-automata-2d/**/cwise-compiler/compiler.js',
+            //        'node_modules/cave-automata-2d/**/cwise-compiler/lib/compile.js',
+            //        'node_modules/cave-automata-2d/**/cwise-compiler/lib/thunk.js',
+            //        'node_modules/cave-automata-2d/**/uniq/uniq.js',
+            //        'node_modules/cave-automata-2d/**/cwise-parser/index.js',
+            //        'node_modules/cave-automata-2d/**/esprima/esprima.js',
+            //        'node_modules/cave-automata-2d/**/dup/dup.js',
+            //        'node_modules/cave-automata-2d/**/zeros/zeros.js'
 
-                ],
-                //src: [],
-                dest: 'vendor/cave-automata-2d/module.js',///
-//
+            //    ],
+            //    dest: 'vendor/cave-automata-2d/module.js',
 
-                options: {
-                    exclude: [
-                        'node_modules/cave-automata-2d/**/test.js',
-                        'node_modules/cave-automata-2d/**/eyeball-test.js',
-                        'node_modules/cave-automata-2d/**/test/*.js'
-                    ]
-                }
-            }
+            //    options: {
+
+            //        detectGlobals: true,
+            //        fast: true,
+            //        exclude: [
+
+            //        ]
+            //    }
+            //}
         },
 
 
         jshint: {
-            files: ["Gruntfile.js", "src/**/*.js"],
             // configuration options for jshint parsing. For a full explanation of what these do see the URL below:
             // http://jshint.com/docs/options/
-            options: {
+            files: ["Gruntfile.js", "src/**/*.js"],
+            options: {//
                 es3: true,
                 es5: false,
                 camelcase: true,
@@ -53,7 +53,7 @@ module.exports = function(grunt) {
                 eqeqeq: true,
                 immed: true,
                 latedef: false,
-                maxerr: 0,
+                maxerr: 0,//
                 newcap: true,
                 noempty: true,
                 nonbsp: true,
@@ -72,10 +72,15 @@ module.exports = function(grunt) {
                     //bower libraries in bower_components
                     TWEEN: true,
 
+                    //compiled node libraries in vendor
+                    generate: true,
+                    ndarray: true,
+
                     //custom classes in src/lib/classes
                     Elevator: true
                 }
             }
+
         },
         uglify: {
 
@@ -100,7 +105,7 @@ module.exports = function(grunt) {
         watch: {
             js: {
                 files: ["<%= jshint.files %>"],
-                tasks: ["jshint", 'browserify', "uglify"],
+                tasks: ["jshint", "uglify"],
                 options: {
                     livereload: false
                 }
@@ -172,6 +177,6 @@ module.exports = function(grunt) {
 
 
     // Default task(s).
-    grunt.registerTask('default', ['jshint','browserify','uglify']);
+    grunt.registerTask('default', ['jshint','uglify']);
 
 };

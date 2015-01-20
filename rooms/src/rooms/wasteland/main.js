@@ -18,6 +18,9 @@ room.log = function(text){
 };
 
 
+
+
+
 /**
  * On Enter
  *
@@ -28,7 +31,7 @@ room.onEnter = function(){
 
 
 
-    var tween = new TWEEN.Tween( {
+    /*var tween = new TWEEN.Tween( {
             y: room.objects.cubetest.pos.y
         })
         .to( { y: 70 }, 10000 )
@@ -38,7 +41,25 @@ room.onEnter = function(){
             room.objects.cubetest.pos.y = this.y;
 
         } )
-        .start();
+        .start();*/
+
+    var width = 10;
+    var height = 10;
+    var grid = ndarray.zeros([ width, height ]);
+
+    // Fill the grid with random points,
+    // returning an "iterate" method.
+    var iterate = generate(grid, {
+        density: 0.5,
+        threshold: 5,
+        hood: 1,
+        fill: true
+    });
+
+    // Iterate the grid five times to generate
+    // a smooth-ish layout.
+    var array = iterate(5);
+    room.log('iterate length: '+array.length);
 
 };
 
