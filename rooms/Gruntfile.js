@@ -98,7 +98,7 @@ module.exports = function(grunt) {
             wasteland: {
                 files: {
                     //output JS file path, input array of JS file paths to combine
-                    'js/wasteland.min.js': ['src/lib/classes/Logger.js','src/lib/classes/StringTools.js','bower_components/TWEEN/src/Tween.js','src/lib/classes/Elevator.js','src/rooms/wasteland/main.js']
+                    'js/wasteland.min.js': ['src/lib/classes/Logger.js','src/lib/classes/StringTools.js','bower_components/TWEEN/build/tween.min.js','src/lib/classes/Elevator.js','src/rooms/wasteland/main.js']
                 }
             }
 

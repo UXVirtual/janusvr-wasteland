@@ -8,10 +8,10 @@
 
 var room = room;
 
-room.elevators = {
+/*room.elevators = {
     elevator: new Elevator('elevator',[14.6, 40],20),
     elevator2: new Elevator('elevator2',[30, 74],20)
-};
+};*/
 
 room.log = function(logs){
 
@@ -42,16 +42,40 @@ room.firstRun = function(){
 
 
 
-        tween = new TWEEN.Tween( {
+        new TWEEN.Tween( {
             y: room.objects.cubetest.pos.y
         })
-            .to( { y: 70 }, 2000 )
+            .to( { y: 70 }, 10000 )
+            .yoyo(true)
+            .repeat(Infinity)
+            .easing(TWEEN.Easing.Quadratic.InOut)
+            .onUpdate( function () {
+                //Logger.log('y: '+this.y);
+                room.objects.cubetest.pos.y = this.y;
+
+            } )
+            .onStart(function() {
+                Logger.log('tween started: ');
+            })
+            .onStop(function() {
+                Logger.log('tween stopped: ');
+            })
+            .start();
+
+        new TWEEN.Tween( {
+            scaleX: room.objects.cubetest2.scale.x,
+            scaleY: room.objects.cubetest2.scale.y,
+            scaleZ: room.objects.cubetest2.scale.z
+        })
+            .to( { scaleX: 1.2, scaleY: 1.3, scaleZ: 1.2 }, 500 )
             .yoyo(true)
             .repeat(Infinity)
             .easing(TWEEN.Easing.Quadratic.In)
             .onUpdate( function () {
-                Logger.log('y: '+this.y);
-                room.objects.cubetest.pos.y = this.y;
+                //Logger.log('scaleX: '+this.scaleX);
+                room.objects.cubetest2.scale.x = this.scaleX;
+                room.objects.cubetest2.scale.y = this.scaleY;
+                room.objects.cubetest2.scale.z = this.scaleZ;
 
             } )
             .onStart(function() {
@@ -106,9 +130,9 @@ room.update = function(dt){
     //room.log('mep');
     //room.log(['cake','cake2','cake3']);
 
-    for(var elevator in room.elevators){
+    /*for(var elevator in room.elevators){
         room.elevators[elevator].update();
-    }
+    }*/
 
 
     var tweenSuccess = TWEEN.update();
