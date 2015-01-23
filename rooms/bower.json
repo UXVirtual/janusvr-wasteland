@@ -15,6 +15,7 @@
     "bower_components"
   ],
   "dependencies": {
-    "TWEEN": "git@github.com:hazardu5/tween.js.git"
+    "TWEEN": "git@github.com:hazardu5/tween.js.git",
+    "lodash": "~3.0.0"
   }
 }

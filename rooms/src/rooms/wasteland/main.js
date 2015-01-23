@@ -28,6 +28,32 @@ room.log = function(logs){
     room.objects.debugText.text = output;
 };
 
+room.moveDustDevil = function(){
+
+    var randomXOffset = _.random(0,50);
+    var randomXDir = _.random(0,1);
+    var randomZOffset = _.random(0,50);
+    var randomZDir = _.random(0,1);
+
+    new TWEEN.Tween( {
+        x: room.objects.dustDevil.pos.x,
+        z: room.objects.dustDevil.pos.z
+    })
+        .to( { x: ((randomXDir === 1) ? "+" : "-")+randomXOffset, z: ((randomZDir === 1) ? "+" : "-")+randomZOffset }, 10000 )
+        .easing(TWEEN.Easing.Sinusoidal.InOut)
+        .yoyo()
+        .onUpdate( function () {
+            //Logger.log('scaleX: '+this.scaleX);
+            room.objects.dustDevil.pos.x = this.x;
+            room.objects.dustDevil.pos.z = this.z;
+
+        } )
+        .onComplete( function () {
+            room.moveDustDevil();
+        })
+        .start();
+};
+
 
 var tween;
 
@@ -54,12 +80,6 @@ room.firstRun = function(){
                 room.objects.cubetest.pos.y = this.y;
 
             } )
-            .onStart(function() {
-                Logger.log('tween started: ');
-            })
-            .onStop(function() {
-                Logger.log('tween stopped: ');
-            })
             .start();
 
         new TWEEN.Tween( {
@@ -78,13 +98,11 @@ room.firstRun = function(){
                 room.objects.cubetest2.scale.z = this.scaleZ;
 
             } )
-            .onStart(function() {
-                Logger.log('tween started: ');
-            })
-            .onStop(function() {
-                Logger.log('tween stopped: ');
-            })
             .start();
+
+        room.moveDustDevil();
+
+        //Logger.log(_.random(0,50));
 
         firstRun = true;
     }
