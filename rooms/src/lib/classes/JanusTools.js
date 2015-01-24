@@ -27,8 +27,6 @@ var JanusTools = (function(){
             vec3.transformQuat(forward, forward, quaternion);
             vec3.transformQuat(left, left, quaternion);
 
-
-
             var coordinates = {
                 left: [left[0], left[1], left[2]],
                 up: [up[0], up[1], up[2]],
@@ -40,17 +38,37 @@ var JanusTools = (function(){
             return coordinates;
         },
 
-        objectLookAtPoint: function(object1,point)
+        objectLookAtPoint: function(object1,point,ignoreX,ignoreY,ignoreZ)
         {
+            if(typeof ignoreX === 'undefined'){
+                ignoreX = false;
+            }
 
+            if(typeof ignoreY === 'undefined'){
+                ignoreY = false;
+            }
+
+            if(typeof ignoreZ === 'undefined'){
+                ignoreZ = false;
+            }
+
+            var transformedPoint = this.objectTransformPoint(object1,point);
+
+            var x = (ignoreX) ? object1.fwd.x : transformedPoint.x;
+            var y = (ignoreY) ? object1.fwd.y : transformedPoint.y;
+            var z = (ignoreZ) ? object1.fwd.z : transformedPoint.z;
+
+            object1.fwd = new Vector(x,y,z);
+        },
+
+        objectTransformPoint: function(object1,point)
+        {
             //invert the coordinates so object will be facing the correct direction when looking at point
             point.x = point.x*-1;
             point.y = point.y*-1;
             point.z = point.z*-1;
 
-            Logger.log(Math.round(point.x * 100) / 100+' '+Math.round(point.y * 100) / 100+' '+Math.round(point.z * 100) / 100);
-
-            object1.fwd = point;
+            return point;
         },
 
         generateStairs: function(position,color){

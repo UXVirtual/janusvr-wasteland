@@ -146,8 +146,33 @@ room.firstRun = function(){
         firstRun = true;
     }
 
+    var head = room.objects.monster18Head;
+    var body = room.objects.monster18Body;
+
     JanusTools.objectLookAtPoint(room.objects.dustDevilText,player["view_dir"]);
-    JanusTools.objectLookAtPoint(room.objects.monster18Head,player["view_dir"]);
+    JanusTools.objectLookAtPoint(head,player["view_dir"]);
+    JanusTools.objectLookAtPoint(body,player["view_dir"],false,true);
+
+    Logger.log('Head: '+Math.round(head.fwd.x * 100) / 100+' '+Math.round(head.fwd.y * 100) / 100+' '+Math.round(head.fwd.z * 100) / 100);
+    Logger.log('Body: '+Math.round(body.fwd.x * 100) / 100+' '+Math.round(body.fwd.y * 100) / 100+' '+Math.round(body.fwd.z * 100) / 100);
+
+    /*if((head.fwd.x >= body.fwd.x+0.5*-1 && head.fwd.x < body.fwd.x-0.5*-1) || (head.fwd.z >= body.fwd.z+0.5*-1 && head.fwd.z < body.fwd.z-0.5*-1)){
+        //head is behind the body - rotate body so it faces forwards
+        var point = JanusTools.objectTransformPoint(body,player["view_dir"]);
+
+        new TWEEN.Tween( {
+            x: body.fwd.x,
+            y: body.fwd.y,
+            z: body.fwd.z
+        })
+            .to( { x: point.x, y: point.y, z: point.z }, 500 )
+            .easing(TWEEN.Easing.Quadratic.In)
+            .onUpdate( function () {
+                body.fwd = new Vector(this.x,this.y,this.z);
+
+            } )
+            .start();
+    }*/
 
 
 };
