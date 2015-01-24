@@ -60,6 +60,7 @@ module.exports = function(grunt) {
                 nonew: true,
                 undef: true,
                 unused: false,
+                sub: true,
 
                 globals: {
                     'debugger': true,

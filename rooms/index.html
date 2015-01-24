@@ -49,7 +49,10 @@
 
         <Room fog="true" fog_col="0.839 0.667 0.522" shader_id="" fog_mode="exp" fog_density="0.005" near_dist="0.010" far_dist="100000.000" locked="false" use_local_asset="room_plane" visible="true" skybox_left_id="left" skybox_right_id="right" skybox_front_id="front" skybox_back_id="back" skybox_up_id="up" skybox_down_id="down" default_sounds="false" walk_speed="5.0" run_speed="10.0" col="0.208 0.157 0.122" pos="39.4 16.7 -3.7" fwd="0 0 -1">
 
-            <Ghost auto_play="false" js_id="billy-bob" id="Billy Bob" head_id="monster18_head" body_id="monster18_body" scale="1.4 1.4 1.4" lighting="false" head_pos="0 0.2 0"/>
+            <!--<Ghost auto_play="false" js_id="billy-bob" id="Billy Bob" head_id="monster18_head" body_id="monster18_body" scale="1.4 1.4 1.4" lighting="false" head_pos="0 0.2 0"/>-->
+
+            <Object id="monster18_head" js_id="monster18Head" scale="1.4 1.4 1.4" pos="31.8 15.6 -9.5" lighting="false"/>
+            <Object id="monster18_body" scale="1.4 1.4 1.4" pos="31.8 15.7 -9.7" lighting="false"/>
 
             <Object id="cube" js_id="cubetest" pos="28.2 14 -9" collision_id="cube" lighting="false" scale="10 0.2 10" col="0.208 0.18 0.141" />
 
@@ -85,7 +88,7 @@
 
             <Object id="cube" js_id="elevator2" collision_id="cube" pos="25.6 14.9 -9.7" scale="2.1 1 4.7" col="0.208 0.18 0.141" lighting="false" />
 
-            <Object id="landscape" shader_id="acid-shader" locked="false" collision_id="landscape" pos="0 -0.7 0" scale="10 10 10" lighting="false" />
+            <Object id="landscape" shader_id="acid-shader" locked="true" collision_id="landscape" pos="0 -0.7 0" scale="10 10 10" lighting="false" />
         </Room>
     </FireBoxRoom>
 

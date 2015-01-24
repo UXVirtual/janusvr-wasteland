@@ -17,7 +17,7 @@ var JanusTools = (function(){
             return temp;
         },
 
-        generateLeftUpForward: function(left2,up2,forward2,quaternion)
+        generateLeftUpForward: function(quaternion)
         {
             var up = [0, 1, 0];
             var forward = [0, 0, -1];
@@ -40,36 +40,32 @@ var JanusTools = (function(){
             return coordinates;
         },
 
-        objectLookAt: function(object1,object2)
+        objectLookAtPoint: function(object1,point)
         {
-            var playerPosition = vec3.fromValues(object2.pos.x, object2.pos.y, object2.pos.z);
 
+            //invert the coordinates so object will be facing the correct direction when looking at point
+            point.x = point.x*-1;
+            point.y = point.y*-1;
+            point.z = point.z*-1;
 
-            //Logger.log(object2.pos.x+','+object2.pos.y+','+object2.pos.z);
+            Logger.log(Math.round(point.x * 100) / 100+' '+Math.round(point.y * 100) / 100+' '+Math.round(point.z * 100) / 100);
 
-            var quaternion = this.createfromXYZ(playerPosition);
+            object1.fwd = point;
+        },
 
-            var rotationCoordinates = this.generateLeftUpForward(vec3.fromValues(object1.xdir.x,object1.xdir.y,object1.xdir.z),vec3.fromValues(object1.ydir.x,object1.ydir.y,object1.ydir.z),vec3.fromValues(object1.zdir.x,object1.zdir.y,object1.zdir.z),quaternion);
+        generateStairs: function(position,color){
+            Logger.log('Generating stairs...');
 
-            //Logger.log(object1.xdir+','+object1.ydir+','+object1.zdir);
+            room.createObject("Object",{'js_id':"stair1"});
 
-            object1.xdir.x = rotationCoordinates.left[0];
-            object1.xdir.y = rotationCoordinates.left[1];
-            object1.xdir.z = rotationCoordinates.left[2];
+            room.objects.stair1.id = 'cube';
+            room.objects.stair1.pos = new Vector(position[0],position[1],position[2]);
+            room.objects.stair1.col = new Vector(color[0],color[1],color[2]);
+            room.objects.stair1.scale = new Vector(1,1,1);
 
-            object1.ydir.x = rotationCoordinates.up[0];
-            object1.ydir.y = rotationCoordinates.up[1];
-            object1.ydir.z = rotationCoordinates.up[2];
-
-            object1.zdir.x = rotationCoordinates.forward[0];
-            object1.zdir.y = rotationCoordinates.forward[1];
-            object1.zdir.z = rotationCoordinates.forward[2];
-
-            //Logger.log(object1.xdir.x+','+object1.xdir.y+','+object1.xdir.z);
-
-            //object1.xdir = new Vector(rotationCoordinates.left[0], rotationCoordinates.left[1], rotationCoordinates.left[2]);
-            //object1.ydir = new Vector(rotationCoordinates.up[0], rotationCoordinates.up[1], rotationCoordinates.up[2]);
-            //object1.zdir = new Vector(rotationCoordinates.forward[0], rotationCoordinates.forward[1], rotationCoordinates.forward[2]);
+            Logger.log('Generated stairs at: '+room.objects.stair1.pos);
         }
+
+
     };
 }());

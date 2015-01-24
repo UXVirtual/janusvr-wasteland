@@ -39,11 +39,11 @@ room.moveDustDevil = function(){
         x: room.objects.dustDevil.pos.x,
         z: room.objects.dustDevil.pos.z
     })
-        .to( { x: ((randomXDir === 1) ? "+" : "-")+randomXOffset, z: ((randomZDir === 1) ? "+" : "-")+randomZOffset }, 2000 )
+        .to( { x: ((randomXDir === 1) ? "+" : "-")+randomXOffset, z: ((randomZDir === 1) ? "+" : "-")+randomZOffset }, 10000 )
         .easing(TWEEN.Easing.Sinusoidal.InOut)
         .yoyo()
         .onUpdate( function () {
-            Logger.log(Math.round(room.objects.dustDevil.pos.x)+','+Math.round(room.objects.dustDevil.pos.y)+','+Math.round(room.objects.dustDevil.pos.z));
+            //Logger.log(Math.round(room.objects.dustDevil.pos.x)+','+Math.round(room.objects.dustDevil.pos.y)+','+Math.round(room.objects.dustDevil.pos.z));
 
             if(this.x > 85){
                 room.objects.dustDevil.pos.x = 85;
@@ -111,7 +111,6 @@ room.firstRun = function(){
             .onUpdate( function () {
                 //Logger.log('y: '+this.y);
                 room.objects.cubetest.pos.y = this.y;
-
             } )
             .start();
 
@@ -137,14 +136,20 @@ room.firstRun = function(){
 
         //Logger.log(room.objects.dustDevilText.xdir+' '+room.objects.dustDevilText.ydir+' '+room.objects.dustDevilText.zdir);
 
-        //room.moveDustDevil();
+        room.moveDustDevil();
 
         //Logger.log(_.random(0,50));
+
+
+        JanusTools.generateStairs([28.2, 14.6, -9],[0, 0, 0]);
 
         firstRun = true;
     }
 
-    JanusTools.objectLookAt(room.objects.dustDevilText,player);
+    JanusTools.objectLookAtPoint(room.objects.dustDevilText,player["view_dir"]);
+    JanusTools.objectLookAtPoint(room.objects.monster18Head,player["view_dir"]);
+
+
 };
 
 /**
