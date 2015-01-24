@@ -16,6 +16,7 @@
   ],
   "dependencies": {
     "TWEEN": "git@github.com:hazardu5/tween.js.git",
-    "lodash": "~3.0.0"
+    "lodash": "~3.0.0",
+    "gl-matrix": "~2.2.1"
   }
 }

@@ -39,14 +39,47 @@ room.moveDustDevil = function(){
         x: room.objects.dustDevil.pos.x,
         z: room.objects.dustDevil.pos.z
     })
-        .to( { x: ((randomXDir === 1) ? "+" : "-")+randomXOffset, z: ((randomZDir === 1) ? "+" : "-")+randomZOffset }, 10000 )
+        .to( { x: ((randomXDir === 1) ? "+" : "-")+randomXOffset, z: ((randomZDir === 1) ? "+" : "-")+randomZOffset }, 2000 )
         .easing(TWEEN.Easing.Sinusoidal.InOut)
         .yoyo()
         .onUpdate( function () {
-            //Logger.log('scaleX: '+this.scaleX);
-            room.objects.dustDevil.pos.x = this.x;
-            room.objects.dustDevil.pos.z = this.z;
+            Logger.log(Math.round(room.objects.dustDevil.pos.x)+','+Math.round(room.objects.dustDevil.pos.y)+','+Math.round(room.objects.dustDevil.pos.z));
 
+            if(this.x > 85){
+                room.objects.dustDevil.pos.x = 85;
+                room.objects.dustDevilText.pos.x = 85;
+            }else{
+                room.objects.dustDevil.pos.x = this.x;
+                room.objects.dustDevilText.pos.x = this.x;
+            }
+
+            if(this.x < 0){
+                room.objects.dustDevil.pos.x = 0;
+                room.objects.dustDevilText.pos.x = 0;
+            }else{
+                room.objects.dustDevil.pos.x = this.x;
+                room.objects.dustDevilText.pos.x = this.x;
+            }
+
+            if(this.z > 4){
+                room.objects.dustDevil.pos.z = 4;
+                room.objects.dustDevilText.pos.x = 4;
+            }else{
+                room.objects.dustDevil.pos.z = this.z;
+                room.objects.dustDevilText.pos.z = this.z;
+            }
+
+            if(this.z < -61){
+                room.objects.dustDevil.pos.z = -61;
+                room.objects.dustDevilText.pos.x = -61;
+            }else{
+                room.objects.dustDevil.pos.z = this.z;
+                room.objects.dustDevilText.pos.z = this.z;
+            }
+
+            //JanusTools.objectLookAt(room.objects.dustDevilText,player);
+
+            room.objects.dustDevilText.text = Math.round(room.objects.dustDevil.pos.x)+','+Math.round(room.objects.dustDevil.pos.y)+','+Math.round(room.objects.dustDevil.pos.z);
         } )
         .onComplete( function () {
             room.moveDustDevil();
@@ -100,12 +133,18 @@ room.firstRun = function(){
             } )
             .start();
 
-        room.moveDustDevil();
+
+
+        //Logger.log(room.objects.dustDevilText.xdir+' '+room.objects.dustDevilText.ydir+' '+room.objects.dustDevilText.zdir);
+
+        //room.moveDustDevil();
 
         //Logger.log(_.random(0,50));
 
         firstRun = true;
     }
+
+    JanusTools.objectLookAt(room.objects.dustDevilText,player);
 };
 
 /**
@@ -153,7 +192,7 @@ room.update = function(dt){
     }*/
 
 
-    var tweenSuccess = TWEEN.update();
+    TWEEN.update();
 
 
 

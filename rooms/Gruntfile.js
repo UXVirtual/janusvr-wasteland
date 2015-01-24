@@ -64,23 +64,31 @@ module.exports = function(grunt) {
                 globals: {
                     'debugger': true,
                     room: true,
-
+                    player: true,
                     debug: true,
                     print: true,
                     uniqueId: true,
                     removeKey: true,
+                    Vector: true,
+                    translate: true,
+                    scalarMultiply: true,
+                    cross: true,
+                    normalized: true,
+                    distance: true,
 
                     //bower libraries in bower_components
                     TWEEN: true,
+                    THREE: true,
+                    quat: true,
+                    vec3: true,
+                    _: true,
 
                     //compiled node libraries in vendor
 
-
                     //custom classes in src/lib/classes
-                    Elevator: true,
                     Logger: true,
                     StringTools: true,
-                    _: true
+                    JanusTools: true
                 }
             }
 
@@ -99,7 +107,7 @@ module.exports = function(grunt) {
             wasteland: {
                 files: {
                     //output JS file path, input array of JS file paths to combine
-                    'js/wasteland.min.js': ['src/lib/classes/Logger.js','src/lib/classes/StringTools.js','bower_components/TWEEN/build/tween.min.js','bower_components/lodash/lodash.min.js','bower_components/faker/dist/faker.js','src/rooms/wasteland/main.js']
+                    'js/wasteland.min.js': ['src/lib/classes/Logger.js','src/lib/classes/StringTools.js','bower_components/TWEEN/build/tween.min.js','bower_components/lodash/lodash.min.js','bower_components/gl-matrix/dist/gl-matrix-min.js','src/lib/classes/JanusTools.js','bower_components/faker/dist/faker.js','src/rooms/wasteland/main.js']
                 }
             }
 

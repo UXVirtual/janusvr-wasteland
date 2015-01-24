@@ -20,7 +20,6 @@
 
             <AssetObject id="blank" src="models/blank.obj"/>
 
-            <AssetObject id="landscape-collision" src="models/landscape-collision.obj"/>
             <AssetObject id="landscape" src="models/landscape.dae"/>
 
             <AssetObject id="skybox" src="models/skybox/skybox.dae"/>
@@ -46,13 +45,9 @@
             <AssetGhost id="Billy Bob" src="ghosts/ghost18.ghost" />
 
 
-            <AssetGhost id="sand-lurker" src="ghosts/sand-lurker.ghost" />
-
         </Assets>
 
         <Room fog="true" fog_col="0.839 0.667 0.522" shader_id="" fog_mode="exp" fog_density="0.005" near_dist="0.010" far_dist="100000.000" locked="false" use_local_asset="room_plane" visible="true" skybox_left_id="left" skybox_right_id="right" skybox_front_id="front" skybox_back_id="back" skybox_up_id="up" skybox_down_id="down" default_sounds="false" walk_speed="5.0" run_speed="10.0" col="0.208 0.157 0.122" pos="39.4 16.7 -3.7" fwd="0 0 -1">
-
-            <Ghost id="sand-lurker" cull_face="none" shader_id="" head_id="" head_pos="0 -10 0" body_id="blank" scale="50 50 50" col="0.208 0.18 0.141" loop="true" auto_play="true" lighting="false" rotate_axis="0.000 1.000 0.000" rotate_deg_per_sec="15" />
 
             <Ghost auto_play="false" js_id="billy-bob" id="Billy Bob" head_id="monster18_head" body_id="monster18_body" scale="1.4 1.4 1.4" lighting="false" head_pos="0 0.2 0"/>
 
@@ -61,9 +56,11 @@
             <Object id="cube" js_id="cubetest2" pos="30 15.6 -9" collision_id="cube" lighting="false" scale="1 1 1" col="0.208 0.18 0.141" />
 
 
-            <!--<Sound id="ambient-music" rect="-100 -50 100 50" loop="true" />-->
+            <Sound id="ambient-music" rect="-100 -50 100 50" loop="true" />
 
-            <Object id="blank" js_id="dustDevil" pos="33 0 -35">
+            <Text id="dust-devil-text" js_id="dustDevilText" pos="33 30 -35" scale="4 4 4">x,y,z</Text>
+            <Object id="blank" js_id="dustDevil" pos="33 0 -35" scale="1 1 1">
+
                 <Object id="dust-devil" js_id="dust-devil1" pos="0 11 0" scale="4 4 4" lighting="false" rotate_axis="0.000 1.000 0.000" rotate_deg_per_sec="120" />
                 <Object id="dust-devil" js_id="dust-devil2" pos="0 15 0" scale="5 5 5" lighting="false" rotate_axis="0.000 1.000 0.000" rotate_deg_per_sec="60" />
                 <Object id="dust-devil" js_id="dust-devil3" pos="0 13 0" scale="7 7 7" lighting="false" rotate_axis="0.000 1.000 0.000" rotate_deg_per_sec="90" />
@@ -74,13 +71,21 @@
 
             <Object id="skybox2" pos="0 0 0" lighting="false" scale="3000 3000 3000" rotate_axis="0.000 1.000 0.000" rotate_deg_per_sec="0.5" locked="true" />
 
+            <Object id="cube" js_id="bounds" col="1 1 1" scale="1 1 1" pos="85 16.7 4" lighting="false" />
+
+            <Object id="cube" js_id="bounds" col="1 1 1" scale="1 1 1" pos="0 16.7 4" lighting="false" />
+
+            <Object id="cube" js_id="bounds" col="1 1 1" scale="1 1 1" pos="85 16.7 -61" lighting="false" />
+
+            <Object id="cube" js_id="bounds" col="1 1 1" scale="1 1 1" pos="0 16.7 -61" lighting="false" />
+
             <Object id="cube" js_id="elevator" collision_id="cube" pos="28.2 14.6 -9" xdir="-0.99 -0.12 0.07" ydir="-0.11 0.98 0.17" zdir="-0.09 0.16 -0.98" scale="2.1 1 4.7" col="0.208 0.18 0.141" lighting="false" />
 
             <Paragraph js_id="debugText" pos="32.6 17.8 -3.9" fwd="0 0 -1" col="0.5 0.8 0.5" scale="2 2 2" locked="false" lighting="false">Debug window</Paragraph>
 
             <Object id="cube" js_id="elevator2" collision_id="cube" pos="25.6 14.9 -9.7" scale="2.1 1 4.7" col="0.208 0.18 0.141" lighting="false" />
 
-            <Object id="landscape" shader_id="acid-shader" locked="true" collision_id="landscape-collision" pos="0 -0.7 0" scale="10 10 10" lighting="false" />
+            <Object id="landscape" shader_id="acid-shader" locked="false" collision_id="landscape" pos="0 -0.7 0" scale="10 10 10" lighting="false" />
         </Room>
     </FireBoxRoom>
 
