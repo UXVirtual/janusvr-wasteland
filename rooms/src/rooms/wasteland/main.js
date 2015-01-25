@@ -8,10 +8,20 @@
 
 var room = room;
 
+var lastPlayerYFalling = 0;
+var lastPlayerY = 0;
+var killPlayerWhenLanded = false;
+var fogMachine;
+var isDying = false;
+
 /*room.elevators = {
     elevator: new Elevator('elevator',[14.6, 40],20),
     elevator2: new Elevator('elevator2',[30, 74],20)
 };*/
+
+room.logDebug = function(text){
+    JanusTools.updateHUD(room.objects['console'],player,0.9,text);
+};
 
 room.log = function(logs){
 
@@ -28,6 +38,107 @@ room.log = function(logs){
     room.objects.debugText.text = output;
 };
 
+room.startFogMachine = function(){
+    fogMachine = JanusTools.cycleFog(room,0.005,0.020,1000,isDying);
+};
+
+room.resetPlayerPosition = function(){
+    player.pos = new Vector(38.09,17,-5.39);//room.pos;
+    player.xdir = new Vector(0.85,0,0.53);
+    player.ydir = new Vector(0,1,0);
+    player.zdir = new Vector(0.53,0,-0.84);
+    lastPlayerYFalling = 0;
+    lastPlayerY = 0;
+};
+
+room.killPlayer = function(){
+
+    isDying = true;
+
+    var originalFogCol = room['fog_col'];
+    var originalFogDensity = room['fog_density'];
+    //var originalFogMode = room['fog_mode'];
+
+    //fogMachine.stop();
+
+    new TWEEN.Tween( {
+        density: originalFogDensity,
+        r: originalFogCol.x,
+        g: originalFogCol.y,
+        b: originalFogCol.z
+    })
+        .to( {
+            density: 3,
+            r: 1,
+            g: 0,
+            b: 0
+        }, 1000 )
+        .easing(TWEEN.Easing.Linear.None)
+        .onStart( function(){
+            //room['fog_mode'] = 'linear';
+        })
+        .onUpdate( function () {
+
+
+            room['fog_density'] = this.density;
+            room['fog_col'] = new Vector(this.r,this.g,this.b);
+
+        } )
+        .onComplete( function () {
+            //reset players position to start
+            room.resetPlayerPosition();
+            room['fog_density'] = originalFogDensity;
+            room['fog_col'] = originalFogCol;
+            //room['fog_mode'] = originalFogMode;
+            //room.startFogMachine();
+            isDying = false;
+        })
+        .start();
+};
+
+room.checkFalling = function(){
+    //check if player is falling
+    new TWEEN.Tween( {
+        time: 0
+    })
+        .to( { time: 2000 }, 2000 )
+        .onStart( function () {
+
+        })
+        .onUpdate( function () {
+
+
+
+        } )
+        .onComplete( function() {
+            if(lastPlayerYFalling-player.pos.y > 10){
+                //player has fallen 5m since last check 2 seconds ago - they will be killed when they land
+                killPlayerWhenLanded = true;
+            }
+
+
+
+            lastPlayerYFalling = player.pos.y;
+
+
+
+            room.checkFalling();
+        })
+        .start();
+};
+
+room.checkLanded = function(){
+    if(lastPlayerY === player.pos.y){
+        //player is stationary - if they must be killed do it here
+        if(killPlayerWhenLanded){
+
+            killPlayerWhenLanded = false;
+
+            room.killPlayer();
+        }
+    }
+};
+
 room.moveDustDevil = function(){
 
     var randomXOffset = _.random(0,50);
@@ -35,9 +146,12 @@ room.moveDustDevil = function(){
     var randomZOffset = _.random(0,50);
     var randomZDir = _.random(0,1);
 
+    var dustDevil = room.objects.dustDevil;
+    var text = room.objects.dustDevilText;
+
     new TWEEN.Tween( {
-        x: room.objects.dustDevil.pos.x,
-        z: room.objects.dustDevil.pos.z
+        x: dustDevil.pos.x,
+        z: dustDevil.pos.z
     })
         .to( { x: ((randomXDir === 1) ? "+" : "-")+randomXOffset, z: ((randomZDir === 1) ? "+" : "-")+randomZOffset }, 10000 )
         .easing(TWEEN.Easing.Sinusoidal.InOut)
@@ -46,40 +160,40 @@ room.moveDustDevil = function(){
             //Logger.log(Math.round(room.objects.dustDevil.pos.x)+','+Math.round(room.objects.dustDevil.pos.y)+','+Math.round(room.objects.dustDevil.pos.z));
 
             if(this.x > 85){
-                room.objects.dustDevil.pos.x = 85;
-                room.objects.dustDevilText.pos.x = 85;
+                dustDevil.pos.x = 85;
+                text.pos.x = 85;
             }else{
-                room.objects.dustDevil.pos.x = this.x;
-                room.objects.dustDevilText.pos.x = this.x;
+                dustDevil.pos.x = this.x;
+                text.pos.x = this.x;
             }
 
             if(this.x < 0){
-                room.objects.dustDevil.pos.x = 0;
-                room.objects.dustDevilText.pos.x = 0;
+                dustDevil.pos.x = 0;
+                text.pos.x = 0;
             }else{
-                room.objects.dustDevil.pos.x = this.x;
-                room.objects.dustDevilText.pos.x = this.x;
+                dustDevil.pos.x = this.x;
+                text.pos.x = this.x;
             }
 
             if(this.z > 0){
-                room.objects.dustDevil.pos.z = 0;
-                room.objects.dustDevilText.pos.z = 0;
+                dustDevil.pos.z = 0;
+                text.pos.z = 0;
             }else{
-                room.objects.dustDevil.pos.z = this.z;
-                room.objects.dustDevilText.pos.z = this.z;
+                dustDevil.pos.z = this.z;
+                text.pos.z = this.z;
             }
 
             if(this.z < -61){
-                room.objects.dustDevil.pos.z = -61;
-                room.objects.dustDevilText.pos.z = -61;
+                dustDevil.pos.z = -61;
+                text.pos.z = -61;
             }else{
-                room.objects.dustDevil.pos.z = this.z;
-                room.objects.dustDevilText.pos.z = this.z;
+                dustDevil.pos.z = this.z;
+                text.pos.z = this.z;
             }
 
             //JanusTools.objectLookAt(room.objects.dustDevilText,player);
 
-            room.objects.dustDevilText.text = Math.round(room.objects.dustDevil.pos.x)+','+Math.round(room.objects.dustDevil.pos.y)+','+Math.round(room.objects.dustDevil.pos.z);
+            text.text = Math.round(dustDevil.pos.x)+','+Math.round(dustDevil.pos.y)+','+Math.round(dustDevil.pos.z);
         } )
         .onComplete( function () {
             room.moveDustDevil();
@@ -99,25 +213,58 @@ var firstRun = false;
 room.firstRun = function(){
     if(!firstRun){
 
+        var elevator = room.objects.elevator;
+        var elevator2 = room.objects.elevator2;
+        var elevator3 = room.objects.elevator3;
+        var scalecube = room.objects.scalecube;
 
-
+        //animate elevator
         new TWEEN.Tween( {
-            y: room.objects.cubetest.pos.y
+            y: elevator.pos.y
         })
-            .to( { y: 70 }, 10000 )
+            .to( { y: 35 }, 10000 )
             .yoyo(true)
             .repeat(Infinity)
             .easing(TWEEN.Easing.Quadratic.InOut)
             .onUpdate( function () {
                 //Logger.log('y: '+this.y);
-                room.objects.cubetest.pos.y = this.y;
+                elevator.pos.y = this.y;
             } )
             .start();
 
+        //animate elevator2
         new TWEEN.Tween( {
-            scaleX: room.objects.cubetest2.scale.x,
-            scaleY: room.objects.cubetest2.scale.y,
-            scaleZ: room.objects.cubetest2.scale.z
+            y: elevator2.pos.y
+        })
+            .to( { y: 60 }, 5000 )
+            .yoyo(true)
+            .repeat(Infinity)
+            .easing(TWEEN.Easing.Quadratic.InOut)
+            .onUpdate( function () {
+                //Logger.log('y: '+this.y);
+                elevator2.pos.y = this.y;
+            } )
+            .start();
+
+        //animate elevator3
+        new TWEEN.Tween( {
+            y: elevator3.pos.y
+        })
+            .to( { y: 73 }, 2500 )
+            .yoyo(true)
+            .repeat(Infinity)
+            .easing(TWEEN.Easing.Quadratic.InOut)
+            .onUpdate( function () {
+                //Logger.log('y: '+this.y);
+                elevator3.pos.y = this.y;
+            } )
+            .start();
+
+        //animate scalecube
+        new TWEEN.Tween( {
+            scaleX: scalecube.scale.x,
+            scaleY: scalecube.scale.y,
+            scaleZ: scalecube.scale.z
         })
             .to( { scaleX: 1.2, scaleY: 1.3, scaleZ: 1.2 }, 500 )
             .yoyo(true)
@@ -125,20 +272,23 @@ room.firstRun = function(){
             .easing(TWEEN.Easing.Quadratic.In)
             .onUpdate( function () {
                 //Logger.log('scaleX: '+this.scaleX);
-                room.objects.cubetest2.scale.x = this.scaleX;
-                room.objects.cubetest2.scale.y = this.scaleY;
-                room.objects.cubetest2.scale.z = this.scaleZ;
+                scalecube.scale.x = this.scaleX;
+                scalecube.scale.y = this.scaleY;
+                scalecube.scale.z = this.scaleZ;
 
             } )
             .start();
 
+        room.startFogMachine();
+
+        room.checkFalling();
 
 
-        //Logger.log(room.objects.dustDevilText.xdir+' '+room.objects.dustDevilText.ydir+' '+room.objects.dustDevilText.zdir);
 
         room.moveDustDevil();
 
-        //Logger.log(_.random(0,50));
+
+
 
 
         JanusTools.generateStairs([28.2, 14.6, -9],[0, 0, 0]);
@@ -146,15 +296,8 @@ room.firstRun = function(){
         firstRun = true;
     }
 
-    var head = room.objects.monster18Head;
-    var body = room.objects.monster18Body;
 
-    JanusTools.objectLookAtPoint(room.objects.dustDevilText,player["view_dir"]);
-    JanusTools.objectLookAtPoint(head,player["view_dir"]);
-    JanusTools.objectLookAtPoint(body,player["view_dir"],false,true);
 
-    //Logger.log('Head: '+Math.round(head.fwd.x * 100) / 100+' '+Math.round(head.fwd.y * 100) / 100+' '+Math.round(head.fwd.z * 100) / 100);
-    //Logger.log('Body: '+Math.round(body.fwd.x * 100) / 100+' '+Math.round(body.fwd.y * 100) / 100+' '+Math.round(body.fwd.z * 100) / 100);
 
 
 };
@@ -190,39 +333,28 @@ room.update = function(dt){
 
     room.firstRun();
 
-    //Logger.log('update: '+Date.now());
+    //room.logDebug("Current height: "+Math.round(player.pos.y * 100) / 100+' killplayer: '+killPlayerWhenLanded);
+
+    room.logDebug("offset: "+Math.round((lastPlayerYFalling-player.pos.y) * 100) / 100+' killplayer: '+killPlayerWhenLanded);
+
+    lastPlayerY = player.pos.y;
 
 
+    room.checkLanded();
 
-    //room.log('tween length: '+TWEEN._tweens.length);
+    //Logger.log(Math.round(lastPlayerYFalling));
 
-    //room.log('mep');
-    //room.log(['cake','cake2','cake3']);
+    var head = room.objects.monster18Head;
+    var body = room.objects.monster18Body;
 
-    /*for(var elevator in room.elevators){
-        room.elevators[elevator].update();
-    }*/
-
-
-    TWEEN.update();
-
-
-
-
-
-    //room.log('update: '+Date.now()+' '+tweenSuccess);
-
-
-    //room.log('tween success: '+tweenSuccess);
-
-
-    //room.objects.cubetest.pos.y = 40;
-
-
+    JanusTools.objectLookAtPoint(room.objects.dustDevilText,player["view_dir"]);
+    JanusTools.objectLookAtPoint(head,player["view_dir"]);
+    JanusTools.objectLookAtPoint(body,player["view_dir"],false,true);
 
     //output currently stored logs to Paragraph in room
     room.log(Logger.get.logsOfLevel(0));
 
+    TWEEN.update();
 };
 
 /**

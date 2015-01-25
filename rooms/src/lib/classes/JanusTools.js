@@ -2,6 +2,7 @@
  * JanusTools
  *
  * Requires gl-matrix (https://github.com/toji/gl-matrix)
+ * Requires tween.js (https://github.com/sole/tween.js/)
  *
  * @constructor
  */
@@ -82,6 +83,59 @@ var JanusTools = (function(){
             room.objects.stair1.scale = new Vector(1,1,1);
 
             Logger.log('Generated stairs at: '+room.objects.stair1.pos);
+        },
+
+        cycleFog: function(object,min,max,interval,paused){
+
+            var randomOffset = _.random(0,min);
+            var randomDir = _.random(0,1);
+
+            var self = this;
+
+            return new TWEEN.Tween( {
+                density: object['fog_density']
+            })
+                .to( { density: ((randomDir === 1) ? "+" : "-")+randomOffset }, interval )
+                .yoyo(true)
+                .easing(TWEEN.Easing.Sinusoidal.InOut)
+                .onUpdate( function () {
+
+                    if(!paused){
+                        var newDensity = this.density;
+
+                        if(this.density < min){
+                            newDensity = min;
+                        }else if(this.density > max){
+                            newDensity = max;
+                        }
+
+                        object['fog_density'] = newDensity;
+                    }
+
+
+
+
+                    //Logger.log(object['fog_density']);
+                } )
+                .onComplete( function () {
+                    self.cycleFog(object,min,max,interval,paused);
+                })
+                .onStop( function() {
+
+                })
+                .start();
+        },
+
+        updateHUD: function(object,player,y,text){
+            // Rudimentary HUD, follows the player and faces the player.
+            object.text = text;
+
+            var offsetPosition = translate(player.pos, player['view_dir']);
+            var faceUserFWD = scalarMultiply(player['view_dir'], -1);
+
+            //y = height that text should display at relative to player's viewport
+            object.pos = translate(offsetPosition, new Vector(0, y, 0));
+            object.fwd = faceUserFWD;
         }
 
 

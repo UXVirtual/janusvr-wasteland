@@ -14,7 +14,7 @@
     <FireBoxRoom>
         <Assets>
 
-            <AssetScript src="js/wasteland.min.js" />
+            <AssetScript src="js/wasteland.min.js?" />
 
             <AssetSound id="ambient-music" src="http://ice.somafm.com/deepspaceone" />
 
@@ -54,12 +54,16 @@
             <Object id="monster18_head" js_id="monster18Head" scale="1.4 1.4 1.4" pos="31.8 15.6 -9.5" lighting="false"/>
             <Object id="monster18_body" js_id="monster18Body" scale="1.4 1.4 1.4" pos="31.8 15.7 -9.7" lighting="false"/>
 
-            <Object id="cube" js_id="cubetest" pos="28.2 14 -9" collision_id="cube" lighting="false" scale="10 0.2 10" col="0.208 0.18 0.141" />
+            <Object id="cube" js_id="elevator" pos="27 14 10" collision_id="cube" lighting="false" scale="10 0.2 10" col="0.208 0.18 0.141" />
 
-            <Object id="cube" js_id="cubetest2" pos="30 15.6 -9" collision_id="cube" lighting="false" scale="1 1 1" col="0.208 0.18 0.141" />
+            <Object id="cube" js_id="elevator2" pos="27 30 18" collision_id="cube" lighting="false" scale="10 0.2 10" col="0.208 0.18 0.141" />
+
+            <Object id="cube" js_id="elevator3" pos="39 55 22" collision_id="cube" lighting="false" scale="10 0.2 10" col="0.208 0.18 0.141" />
+
+            <Object id="cube" js_id="scalecube" pos="30 15.6 -9" collision_id="cube" lighting="false" scale="1 1 1" col="0.208 0.18 0.141" />
 
 
-            <!--<Sound id="ambient-music" rect="-100 -50 100 50" loop="true" />-->
+            <Sound id="ambient-music" rect="-100 -50 100 50" loop="true" />
 
             <Text id="dust-devil-text" js_id="dustDevilText" pos="33 30 -35" scale="4 4 4">x,y,z</Text>
             <Object id="blank" js_id="dustDevil" pos="33 0 -35" scale="1 1 1">
@@ -82,13 +86,16 @@
 
             <Object id="cube" js_id="bounds" col="1 1 1" scale="1 1 1" pos="0 16.7 -61" lighting="false" />
 
-            <Object id="cube" js_id="elevator" collision_id="cube" pos="28.2 14.6 -9" xdir="-0.99 -0.12 0.07" ydir="-0.11 0.98 0.17" zdir="-0.09 0.16 -0.98" scale="2.1 1 4.7" col="0.208 0.18 0.141" lighting="false" />
+            <Object id="cube" collision_id="cube" pos="28.2 14.6 -9" xdir="-0.99 -0.12 0.07" ydir="-0.11 0.98 0.17" zdir="-0.09 0.16 -0.98" scale="2.1 1 4.7" col="0.208 0.18 0.141" lighting="false" />
 
             <Paragraph js_id="debugText" pos="32.6 17.8 -3.9" fwd="0 0 -1" col="0.5 0.8 0.5" scale="2 2 2" locked="false" lighting="false">Debug window</Paragraph>
 
-            <Object id="cube" js_id="elevator2" collision_id="cube" pos="25.6 14.9 -9.7" scale="2.1 1 4.7" col="0.208 0.18 0.141" lighting="false" />
+            <Object id="cube" collision_id="cube" pos="25.6 14.9 -9.7" scale="2.1 1 4.7" col="0.208 0.18 0.141" lighting="false" />
 
-            <Object id="landscape" shader_id="acid-shader" locked="true" collision_id="landscape" pos="0 -0.7 0" scale="10 10 10" lighting="false" />
+            <Object id="landscape" locked="true" collision_id="landscape" pos="0 -0.7 0" scale="10 10 10" lighting="false" />
+
+            <Text js_id="console" pos="3.412 0.999 -16.060" xdir="-1.000 0.000 0.000" ydir="0.000 1.000 0.000" zdir="0.000 0.000 -1.000" col="0.000 1.000 0.000" lighting="false">Current height: X</Text>
+
         </Room>
     </FireBoxRoom>
 
