@@ -61,9 +61,9 @@ room.moveDustDevil = function(){
                 room.objects.dustDevilText.pos.x = this.x;
             }
 
-            if(this.z > 4){
-                room.objects.dustDevil.pos.z = 4;
-                room.objects.dustDevilText.pos.x = 4;
+            if(this.z > 0){
+                room.objects.dustDevil.pos.z = 0;
+                room.objects.dustDevilText.pos.z = 0;
             }else{
                 room.objects.dustDevil.pos.z = this.z;
                 room.objects.dustDevilText.pos.z = this.z;
@@ -71,7 +71,7 @@ room.moveDustDevil = function(){
 
             if(this.z < -61){
                 room.objects.dustDevil.pos.z = -61;
-                room.objects.dustDevilText.pos.x = -61;
+                room.objects.dustDevilText.pos.z = -61;
             }else{
                 room.objects.dustDevil.pos.z = this.z;
                 room.objects.dustDevilText.pos.z = this.z;
@@ -153,26 +153,8 @@ room.firstRun = function(){
     JanusTools.objectLookAtPoint(head,player["view_dir"]);
     JanusTools.objectLookAtPoint(body,player["view_dir"],false,true);
 
-    Logger.log('Head: '+Math.round(head.fwd.x * 100) / 100+' '+Math.round(head.fwd.y * 100) / 100+' '+Math.round(head.fwd.z * 100) / 100);
-    Logger.log('Body: '+Math.round(body.fwd.x * 100) / 100+' '+Math.round(body.fwd.y * 100) / 100+' '+Math.round(body.fwd.z * 100) / 100);
-
-    /*if((head.fwd.x >= body.fwd.x+0.5*-1 && head.fwd.x < body.fwd.x-0.5*-1) || (head.fwd.z >= body.fwd.z+0.5*-1 && head.fwd.z < body.fwd.z-0.5*-1)){
-        //head is behind the body - rotate body so it faces forwards
-        var point = JanusTools.objectTransformPoint(body,player["view_dir"]);
-
-        new TWEEN.Tween( {
-            x: body.fwd.x,
-            y: body.fwd.y,
-            z: body.fwd.z
-        })
-            .to( { x: point.x, y: point.y, z: point.z }, 500 )
-            .easing(TWEEN.Easing.Quadratic.In)
-            .onUpdate( function () {
-                body.fwd = new Vector(this.x,this.y,this.z);
-
-            } )
-            .start();
-    }*/
+    //Logger.log('Head: '+Math.round(head.fwd.x * 100) / 100+' '+Math.round(head.fwd.y * 100) / 100+' '+Math.round(head.fwd.z * 100) / 100);
+    //Logger.log('Body: '+Math.round(body.fwd.x * 100) / 100+' '+Math.round(body.fwd.y * 100) / 100+' '+Math.round(body.fwd.z * 100) / 100);
 
 
 };
