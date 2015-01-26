@@ -243,6 +243,13 @@ room.firstRun = function(){
             } )
             .start();
 
+        //TODO: set sync property to true for elevator objects to force other clients to update the position of
+        //elevator. It may be better to do this after manual activations of elevators. For automatic elevators some kind
+        //of syncronisation using the client's Date.now() time should be sufficient to ensure that the elevators of all
+        //the clients are moving in sync with each other. I.e. when a client joins the JS will have a prepared index of
+        //where the elevator should be at any given second and will skip ahead to the correct point. Might need to swap
+        //out tween.js for Greensock tweening library and use the Timeline class to skip ahead in a tween.
+
         //animate elevator2
         new TWEEN.Tween( {
             y: elevator2.pos.y
