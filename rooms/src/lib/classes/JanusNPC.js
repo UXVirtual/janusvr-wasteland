@@ -54,6 +54,7 @@ var JanusNPC = function (id,dialog,player,targetDistance) {
         room.createObject("Text", {'js_id': 'npcText'});
 
         _textObject = room.objects.npcText;
+        _textObject.id = "Text";
     }
 
     //create image object if it doesn't exist
@@ -61,6 +62,7 @@ var JanusNPC = function (id,dialog,player,targetDistance) {
         room.createObject("Image", {'js_id': 'npcImage'});
 
         _imageObject = room.objects.npcImage;
+        _imageObject.id = _dialog[_currentSentance].image;
     }
 
     return {
@@ -90,12 +92,12 @@ var JanusNPC = function (id,dialog,player,targetDistance) {
 
 
             _textObject.text = _dialog[sentanceID].text;
-            _textObject.col = _dialog[sentanceID].col;
-
-
+            //_textObject.col = _dialog[sentanceID].col;
 
             //set image ID to _currentImage so it will match the first sentence
             _imageObject.id = _dialog[sentanceID].image;
+            _imageObject.scale = new Vector(0.1, 0.1, 0.1);
+            _imageObject.lighting = false;
         },
 
         restart: function () {
@@ -104,7 +106,7 @@ var JanusNPC = function (id,dialog,player,targetDistance) {
         },
 
         isNearby: function () {
-            return JanusTools.isObjectNearby(room.objects[_id],_player,targetDistance);
+            return JanusTools.isObjectNearby(room.objects[_id],_player,_targetDistance);
         }
 
     };
@@ -129,9 +131,14 @@ var JanusNPCTools = (function () {
          */
         update: function(player,y) {
             var textObject = room.objects.npcText;
+            var imageObject = room.objects.npcImage;
 
             if(typeof textObject !== 'undefined'){
-                JanusTools.updateHUD(textObject, player, y);
+                JanusTools.updateHUD(textObject, player, 0, y);
+            }
+
+            if(typeof imageObject !== 'undefined'){
+                JanusTools.updateHUD(imageObject, player, 0, y+0.15);
             }
         }
     };

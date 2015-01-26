@@ -24,7 +24,7 @@ var billyBob;
 };*/
 
 room.logDebug = function(text){
-    JanusTools.updateHUD(room.objects['console'],player,0.9,text);
+    JanusTools.updateHUD(room.objects['console'],player,0,0.9,0,text);
 };
 
 room.log = function(logs){

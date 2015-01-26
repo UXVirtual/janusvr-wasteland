@@ -120,45 +120,40 @@ var JanusTools = (function () {
                 .start();
         },
 
-        updateHUD: function (object, player, y, text) {
+        updateHUD: function (object, player, x, y, z, text) {
             // Rudimentary HUD, follows the player and faces the player.
 
             if (typeof text !== 'undefined') {
                 object.text = text;
             }
 
+            if(typeof x === 'undefined'){
+                x = 0;
+            }
+
+            if(typeof y === 'undefined'){
+                y = 0;
+            }
+
+            if(typeof z === 'undefined'){
+                z = 0;
+            }
+
+
+            //NOTE: Adjusting the below will force the object to always be at a position fixed in the world offset by Z
+            //var offsetPosition = translate(new Vector(player.pos.x,player.pos.y,player.pos.z-20), player['view_dir']);
+
+
             var offsetPosition = translate(player.pos, player['view_dir']);
-            var faceUserFWD = scalarMultiply(player['view_dir'], -1);
+            var faceUserFWD = scalarMultiply(player['view_dir'], new Vector(-1,-1,-1));
+
+            //faceUserFWD.x = faceUserFWD.x*4;
+            //faceUserFWD.z = faceUserFWD.z*4;
 
             //y = height that text should display at relative to player's viewport
-            object.pos = translate(offsetPosition, new Vector(0, y, 0));
+            object.pos = translate(offsetPosition, new Vector( 0, y, 0));
             object.fwd = faceUserFWD;
         },
-
-        /*updateNPCText: function (textObjectName, player, y, text, color) {
-            var textObject;
-
-            if (typeof room.objects[textObjectName] === 'undefined') {
-                room.createObject("Text", {'js_id': textObjectName});
-
-                textObject = room.objects[textObjectName];
-                textObject.id = textObjectName;
-            } else {
-                textObject = room.objects[textObjectName];
-            }
-
-            if (typeof color === 'undefined') {
-                textObject.col = new Vector(1, 1, 1);
-            } else {
-                textObject.col = color;
-            }
-
-            textObject.scale = new Vector(1, 1, 1);
-
-            this.updateHUD(textObject, player, y, text);
-
-
-        },*/
 
         isObjectNearby: function (object1, object2, targetDistance) {
 
