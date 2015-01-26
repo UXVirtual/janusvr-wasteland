@@ -89,7 +89,9 @@ module.exports = function(grunt) {
                     //custom classes in src/lib/classes
                     Logger: true,
                     StringTools: true,
-                    JanusTools: true
+                    JanusTools: true,
+                    JanusNPC: true,
+                    JanusNPCTools: true
                 }
             }
 
@@ -108,7 +110,7 @@ module.exports = function(grunt) {
             wasteland: {
                 files: {
                     //output JS file path, input array of JS file paths to combine
-                    'js/wasteland.min.js': ['src/lib/classes/Logger.js','src/lib/classes/StringTools.js','bower_components/TWEEN/build/tween.min.js','bower_components/lodash/lodash.min.js','src/lib/classes/JanusTools.js','bower_components/faker/dist/faker.js','src/rooms/wasteland/main.js']
+                    'js/wasteland.min.js': ['src/lib/classes/Logger.js','src/lib/classes/StringTools.js','bower_components/TWEEN/build/tween.min.js','bower_components/lodash/lodash.min.js','src/lib/classes/JanusTools.js','src/lib/classes/JanusNPC.js','bower_components/faker/dist/faker.js','src/rooms/wasteland/main.js']
                 }
             }
 

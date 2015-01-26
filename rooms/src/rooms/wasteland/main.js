@@ -14,6 +14,10 @@ var killPlayerWhenLanded = false;
 var fogMachine;
 var isDying = false;
 
+var currentSoundCount = 1;
+
+var billyBob;
+
 /*room.elevators = {
     elevator: new Elevator('elevator',[14.6, 40],20),
     elevator2: new Elevator('elevator2',[30, 74],20)
@@ -52,6 +56,13 @@ room.resetPlayerPosition = function(){
 };
 
 room.killPlayer = function(){
+
+    room.playSound('die'+currentSoundCount);
+    currentSoundCount++;
+
+    if(currentSoundCount > 10){
+        currentSoundCount = 1;
+    }
 
     isDying = true;
 
@@ -293,6 +304,21 @@ room.firstRun = function(){
 
         JanusTools.generateStairs([28.2, 14.6, -9],[0, 0, 0]);
 
+        billyBob = new JanusNPC('billyBob',[
+            {
+                text: "Hey you! Over here!",
+                col: new Vector(1,1,1),
+                image: 'monster18headAssetImage'
+            },
+            {
+                text: "Hi! I'm Billy Bob the robot. I'll prepare the lift for you!",
+                col: new Vector(1,0,0),
+                image: 'monster18headAssetImage'
+            }
+        ],player,3);
+
+        room.playSound('storm-wind-loop');
+
         firstRun = true;
     }
 
@@ -333,19 +359,27 @@ room.update = function(dt){
 
     room.firstRun();
 
-    //room.logDebug("Current height: "+Math.round(player.pos.y * 100) / 100+' killplayer: '+killPlayerWhenLanded);
+    //room.logDebug("offset: "+Math.round((lastPlayerYFalling-player.pos.y) * 100) / 100+' killplayer: '+killPlayerWhenLanded+' NPC: '+JanusTools.isObjectNearby(room.objects.billyBob,player,2));
 
-    room.logDebug("offset: "+Math.round((lastPlayerYFalling-player.pos.y) * 100) / 100+' killplayer: '+killPlayerWhenLanded);
+    //JanusTools.updateNPCText('npcText',player,1.2);
+
+    if(billyBob.isNearby()){
+        billyBob.displaySentance(1);
+    }else{
+        billyBob.restart();
+    }
+
+    JanusNPCTools.update(player,billyBob.currentSentance.get().y);
+
+    //JanusTools.updateNPCText('npcText',player,1.2);
 
     lastPlayerY = player.pos.y;
 
-
     room.checkLanded();
 
-    //Logger.log(Math.round(lastPlayerYFalling));
 
     var head = room.objects.monster18Head;
-    var body = room.objects.monster18Body;
+    var body = room.objects.billyBob;
 
     JanusTools.objectLookAtPoint(room.objects.dustDevilText,player["view_dir"]);
     JanusTools.objectLookAtPoint(head,player["view_dir"]);
@@ -355,6 +389,8 @@ room.update = function(dt){
     room.log(Logger.get.logsOfLevel(0));
 
     TWEEN.update();
+
+    //TODO: add functionality to detect if player has left the room
 };
 
 /**
@@ -379,4 +415,36 @@ room.onCollision = function(object,other){
  */
 room.onClick = function(){
 
+
+};
+
+/**
+ * On Key Up
+ *
+ * @param event
+ */
+room.onKeyUp = function(event)
+{
+
+    //room.logDebug('Pressed: "'+event.keyCode+'"');
+
+    if (event.keyCode === " "){
+        //NOTE: room.playSound() happens really late after the first call so is only useful for non-time critical sfx
+
+        /*
+         Right now, it's not possible to have a single SoundAsset start multiple times at the same time, right? So we
+         have to wait until it's done playing before we can start it again.
+
+         What I'm doing as a workaround right now is basically: have a lot of numbered sound assets and then manage
+         which ones can be recycled using javascript. This works alright, but it would be nice to have a cleaner
+         solution some time in the future!
+         */
+
+        room.playSound('jump-super'+currentSoundCount);
+        currentSoundCount++;
+
+        if(currentSoundCount > 20){
+            currentSoundCount = 1;
+        }
+    }
 };
