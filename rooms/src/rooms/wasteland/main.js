@@ -308,12 +308,14 @@ room.firstRun = function(){
             {
                 text: "Hey you! Over here!",
                 col: new Vector(1,1,1),
-                image: 'monster18headAssetImage'
+                image: 'monster18headAssetImage',
+                y: 0.9
             },
             {
                 text: "Hi! I'm Billy Bob the robot. I'll prepare the lift for you!",
                 col: new Vector(1,0,0),
-                image: 'monster18headAssetImage'
+                image: 'monster18headAssetImage',
+                y: 0.9
             }
         ],player,3);
 

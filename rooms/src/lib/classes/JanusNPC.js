@@ -92,6 +92,7 @@ var JanusNPC = function (id,dialog,player,targetDistance) {
 
 
             _textObject.text = _dialog[sentanceID].text;
+            //NOTE: currently there is a bug where if the color of the text is set after the Text object is initialized it may crash
             //_textObject.col = _dialog[sentanceID].col;
 
             //set image ID to _currentImage so it will match the first sentence
