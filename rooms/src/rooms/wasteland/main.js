@@ -108,34 +108,37 @@ room.killPlayer = function(){
 };
 
 room.checkFalling = function(){
-    //check if player is falling
-    new TWEEN.Tween( {
-        time: 0
-    })
-        .to( { time: 2000 }, 2000 )
-        .onStart( function () {
+    if(JanusTools.isInRoom(player)){
 
+        //check if player is falling
+        new TWEEN.Tween( {
+            time: 0
         })
-        .onUpdate( function () {
+            .to( { time: 2000 }, 2000 )
+            .onStart( function () {
+
+            })
+            .onUpdate( function () {
 
 
 
-        } )
-        .onComplete( function() {
-            if(lastPlayerYFalling-player.pos.y > 10){
-                //player has fallen 5m since last check 2 seconds ago - they will be killed when they land
-                killPlayerWhenLanded = true;
-            }
+            } )
+            .onComplete( function() {
+
+                if(lastPlayerYFalling-player.pos.y > 10){
+                    //player has fallen 5m since last check 2 seconds ago - they will be killed when they land
+                    killPlayerWhenLanded = true;
+                }
 
 
 
-            lastPlayerYFalling = player.pos.y;
+                lastPlayerYFalling = player.pos.y;
 
 
-
-            room.checkFalling();
-        })
-        .start();
+                room.checkFalling();
+            })
+            .start();
+    }
 };
 
 room.checkLanded = function(){
@@ -372,6 +375,8 @@ room.update = function(dt){
 
     //JanusTools.updateNPCText('npcText',player,1.2);
 
+    //TODO: Fix bug caused by NPC library which causes the JS to stutter after a certain amount of time (memory leak?)
+
     if(billyBob.isNearby()){
         billyBob.displaySentance(1);
     }else{
@@ -398,8 +403,6 @@ room.update = function(dt){
     room.log(Logger.get.logsOfLevel(0));
 
     TWEEN.update();
-
-    //TODO: add functionality to detect if player has left the room
 };
 
 /**

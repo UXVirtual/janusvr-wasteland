@@ -8,6 +8,8 @@
  */
 var JanusTools = (function () {
 
+    var _lastURL = '';
+
     return {
         createfromXYZ: function (vec3) {
             var temp = quat.create();
@@ -145,7 +147,7 @@ var JanusTools = (function () {
 
 
             var offsetPosition = translate(player.pos, player['view_dir']);
-            var faceUserFWD = scalarMultiply(player['view_dir'], new Vector(-1,-1,-1));
+            var faceUserFWD = scalarMultiply(player['view_dir'], -1);
 
             //faceUserFWD.x = faceUserFWD.x*4;
             //faceUserFWD.z = faceUserFWD.z*4;
@@ -164,6 +166,15 @@ var JanusTools = (function () {
             var totalDistance = distance(object1.pos, object2.pos);
 
             return (totalDistance <= targetDistance);
+        },
+
+        isInRoom: function (player) {
+            if(player.url === _lastURL){
+                return true;
+            }else{
+                _lastURL = player.url;
+                return false;
+            }
         }
 
 
