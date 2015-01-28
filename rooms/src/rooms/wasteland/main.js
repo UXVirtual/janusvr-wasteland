@@ -322,7 +322,7 @@ room.firstRun = function(){
                 y: 0.9
             },
             {
-                text: "Hi! I'm Billy Bob the robot. I'll prepare the lift for you!",
+                text: "Hi! I'm Billy Bob the robot. I'll prepare the elevator for you!",
                 col: new Vector(1,0,0),
                 image: 'monster18headAssetImage',
                 y: 0.9
@@ -398,6 +398,8 @@ room.update = function(dt){
     JanusTools.objectLookAtPoint(room.objects.dustDevilText,player["view_dir"]);
     JanusTools.objectLookAtPoint(head,player["view_dir"]);
     JanusTools.objectLookAtPoint(body,player["view_dir"],false,true);
+
+    //JanusTools.objectLookAtPoint(room.objects['iron-fence'],player["view_dir"]);
 
     //output currently stored logs to Paragraph in room
     room.log(Logger.get.logsOfLevel(0));
