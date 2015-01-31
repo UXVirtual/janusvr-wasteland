@@ -34,10 +34,10 @@
             <AssetImage id='right' src='img/skybox/wastes-skybox-up.png' tex_clamp='true' />
             <AssetImage id='left' src='img/skybox/wastes-skybox-up.png' tex_clamp='true' />
 
-            <AssetObject id="monster18_head" src="models/moster01_head_invert.obj" tex="http://vrsites.com/avatars/chibimon/monster_18.jpg" />
+            <AssetObject id="monster18_head" src="http://vrsites.com/avatars/chibimon/moster01_head.obj" tex="http://vrsites.com/avatars/chibimon/monster_18.jpg" />
             <AssetObject id="monster18_body" src="http://vrsites.com/avatars/chibimon/moster01_body.obj" tex="http://vrsites.com/avatars/chibimon/monster_18.jpg" />
 
-            <AssetObject id="monster1_head" src="models/moster01_head_invert.obj" tex="http://vrsites.com/avatars/chibimon/monster_01.jpg" />
+            <AssetObject id="monster1_head" src="http://vrsites.com/avatars/chibimon/moster01_head.obj" tex="http://vrsites.com/avatars/chibimon/monster_01.jpg" />
             <AssetObject id="monster1_body" src="http://vrsites.com/avatars/chibimon/moster01_body.obj" tex="http://vrsites.com/avatars/chibimon/monster_01.jpg" />
 
             <AssetImage id="monster18headAssetImage" src="img/npcs/monster18head.png" />
@@ -51,8 +51,6 @@
             <AssetImage id="iron-fence" src="img/iron-fence-wall.png" tex_clamp="false" />
 
             <AssetObject id="cube-custom" src="models/cube.obj" />
-
-            <AssetGhost id="Billy Bob" src="ghosts/ghost18.ghost" />
 
             <AssetSound id="storm-wind-loop" src="music/storm-wind-loop.mp3"></AssetSound>
 
@@ -142,8 +140,10 @@
 
             <!--<Ghost auto_play="false" js_id="billy-bob" id="Billy Bob" head_id="monster18_head" body_id="monster18_body" scale="1.4 1.4 1.4" lighting="false" head_pos="0 0.2 0"/>-->
 
-            <Object id="monster18_head" js_id="monster18Head" scale="1.4 1.4 1.4" pos="31.8 15.6 -9.5" lighting="false"/>
+            <Object id="monster18_head" js_id="billyBobHead" scale="1.4 1.4 1.4" pos="31.8 15.6 -9.5" lighting="false"/>
             <Object id="monster18_body" js_id="billyBob" scale="1.4 1.4 1.4" pos="31.8 15.7 -9.7" lighting="false"/>
+            <Text id="Text" js_id="billyBobAttractorText" pos="31.8 18 -9.5" lighting="false" col="1 1 1">Test</Text>
+
 
             <Object id="cube" js_id="elevator" pos="27 14 10" collision_id="cube" lighting="false" scale="10 0.2 10" col="0.208 0.18 0.141" />
 
@@ -154,7 +154,7 @@
             <Object id="cube" js_id="scalecube" pos="30 15.6 -9" collision_id="cube" lighting="false" scale="1 1 1" col="0.208 0.18 0.141" />
 
 
-            <Sound id="ambient-music" rect="-100 -50 100 50" loop="true" />
+            <!--<Sound id="ambient-music" rect="-100 -50 100 50" loop="true" />-->
 
             <Text id="dust-devil-text" js_id="dustDevilText" pos="33 30 -35" scale="4 4 4">x,y,z</Text>
             <Object id="blank" js_id="dustDevil" pos="33 0 -35" scale="1 1 1">

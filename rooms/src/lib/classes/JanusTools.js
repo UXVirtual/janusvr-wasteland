@@ -39,7 +39,7 @@ var JanusTools = (function () {
             return coordinates;
         },
 
-        objectLookAtPoint: function (object1, point, ignoreX, ignoreY, ignoreZ) {
+        objectLookAtPoint: function (object1, point, ignoreX, ignoreY, ignoreZ, invertPos) {
             if (typeof ignoreX === 'undefined') {
                 ignoreX = false;
             }
@@ -52,7 +52,11 @@ var JanusTools = (function () {
                 ignoreZ = false;
             }
 
-            var transformedPoint = this.objectTransformPoint(object1, point);
+            if (typeof invertPos === 'undefined') {
+                invertPos = true;
+            }
+
+            var transformedPoint = (invertPos) ? this.objectTransformPoint(point) : point;
 
             var x = (ignoreX) ? object1.fwd.x : transformedPoint.x;
             var y = (ignoreY) ? object1.fwd.y : transformedPoint.y;
@@ -61,11 +65,13 @@ var JanusTools = (function () {
             object1.fwd = new Vector(x, y, z);
         },
 
-        objectTransformPoint: function (object1, point) {
+        objectTransformPoint: function (point) {
             //invert the coordinates so object will be facing the correct direction when looking at point
-            point.x = point.x * -1;
-            point.y = point.y * -1;
-            point.z = point.z * -1;
+            //point.x = point.x * -1;
+            //point.y = point.y * -1;
+            //point.z = point.z * -1;
+
+            point = scalarMultiply( new Vector(point.x,point.y,point.z), -1);
 
             return point;
         },
@@ -146,8 +152,8 @@ var JanusTools = (function () {
             //var offsetPosition = translate(new Vector(player.pos.x,player.pos.y,player.pos.z-20), player['view_dir']);
 
 
-            var offsetPosition = translate(player.pos, player['view_dir']);
-            var faceUserFWD = scalarMultiply(player['view_dir'], -1);
+            var offsetPosition = translate(player.pos, new Vector(player['view_dir'].x,player['view_dir'].y,player['view_dir'].z));
+            var faceUserFWD = scalarMultiply( new Vector(player['view_dir'].x,player['view_dir'].y,player['view_dir'].z), -1);
 
             //faceUserFWD.x = faceUserFWD.x*4;
             //faceUserFWD.z = faceUserFWD.z*4;

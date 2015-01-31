@@ -316,13 +316,13 @@ room.firstRun = function(){
 
         billyBob = new JanusNPC('billyBob',[
             {
-                text: "Hey you! Over here!",
-                col: new Vector(1,1,1),
+                text: "!",
+                col: new Vector(0,1,0),
                 image: 'monster18headAssetImage',
-                y: 0.9
+                y: 2.7 //y offset from head of model to text position
             },
             {
-                text: "Hi! I'm Billy Bob the robot. I'll prepare the elevator for you!",
+                text: "Hi "+player.userid+", I'm Billy Bob the robot. I'll prepare the elevator for you!",
                 col: new Vector(1,0,0),
                 image: 'monster18headAssetImage',
                 y: 0.9
@@ -378,12 +378,12 @@ room.update = function(dt){
     //TODO: Fix bug caused by NPC library which causes the JS to stutter after a certain amount of time (memory leak?)
 
     if(billyBob.isNearby()){
-        billyBob.displaySentance(1);
+        billyBob.displaySentence(1);
     }else{
         billyBob.restart();
     }
 
-    JanusNPCTools.update(player,billyBob.currentSentance.get().y);
+    JanusNPCTools.update(player,billyBob);
 
     //JanusTools.updateNPCText('npcText',player,1.2);
 
@@ -392,17 +392,18 @@ room.update = function(dt){
     room.checkLanded();
 
 
-    var head = room.objects.monster18Head;
-    var body = room.objects.billyBob;
+    //var head = room.objects.monster18Head;
+    //var body = room.objects.billyBob;
 
     JanusTools.objectLookAtPoint(room.objects.dustDevilText,player["view_dir"]);
-    JanusTools.objectLookAtPoint(head,player["view_dir"]);
-    JanusTools.objectLookAtPoint(body,player["view_dir"],false,true);
+
 
     //JanusTools.objectLookAtPoint(room.objects['iron-fence'],player["view_dir"]);
 
     //output currently stored logs to Paragraph in room
     room.log(Logger.get.logsOfLevel(0));
+
+    //room.logDebug('Pos: '+room.objects['billyBobAttractorText'].pos);
 
     TWEEN.update();
 };
