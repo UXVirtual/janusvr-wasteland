@@ -114,27 +114,20 @@ var JanusNPC = function (id,dialog,player,targetDistance) {
 
             _currentSentence = sentenceID;
 
+            //NOTE: currently there is a bug where if the color of the text is set after the Text object is
+            // initialized it may crash
             if(typeof targetObject === 'undefined'){
                 _textObject.text = _dialog[sentenceID].text;
+                //_textObject.col = _dialog[sentenceID].col;
             }else{
                 _textObject.text = ' ';
                 targetObject.text = _dialog[sentenceID].text;
+                //targetObject.col = _dialog[sentenceID].col;
             }
 
-            //if(sentenceID === 0){
-            //}else{
-                //set image ID to _currentImage so it will match the first sentence
-
-                //NOTE: currently there is a bug where if the color of the text is set after the Text object is initialized it may crash
-                //_textObject.col = _dialog[sentenceID].col;
-                _imageObject.id = _dialog[sentenceID].image;
-                _imageObject.scale = new Vector(0.1, 0.1, 0.1);
-                _imageObject.lighting = false;
-
-                //targetObject.text = ' ';
-            //}
-
-
+            _imageObject.id = _dialog[sentenceID].image;
+            _imageObject.scale = new Vector(0.1, 0.1, 0.1);
+            _imageObject.lighting = false;
 
         },
 

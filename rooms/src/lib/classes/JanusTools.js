@@ -152,8 +152,8 @@ var JanusTools = (function () {
             //var offsetPosition = translate(new Vector(player.pos.x,player.pos.y,player.pos.z-20), player['view_dir']);
 
 
-            var offsetPosition = translate(player.pos, new Vector(player['view_dir'].x,player['view_dir'].y,player['view_dir'].z));
-            var faceUserFWD = scalarMultiply( new Vector(player['view_dir'].x,player['view_dir'].y,player['view_dir'].z), -1);
+            var offsetPosition = translate(player.pos, player['view_dir']);
+            var faceUserFWD = scalarMultiply( player['view_dir'], -1);
 
             //faceUserFWD.x = faceUserFWD.x*4;
             //faceUserFWD.z = faceUserFWD.z*4;
