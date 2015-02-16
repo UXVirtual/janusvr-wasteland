@@ -319,13 +319,13 @@ room.firstRun = function(){
                 text: "!",
                 col: new Vector(0,1,0),
                 image: 'monster18headAssetImage',
-                y: 2.7 //y offset from head of model to text position
+                y: 1 //y offset from head of model to text position
             },
             {
                 text: "Hi "+player.userid+", I'm Billy Bob the robot. I'll prepare the elevator for you!",
                 col: new Vector(1,0,0),
                 image: 'monster18headAssetImage',
-                y: 0.9
+                y: -0.3
             }
         ],player,3);
 
@@ -462,4 +462,19 @@ room.onKeyUp = function(event)
             currentSoundCount = 1;
         }
     }
+};
+
+room.onMouseUp = function(event)
+{
+
+};
+
+room.onMouseDown = function(event)
+{
+
+};
+
+room.onMouseMove = function(event)
+{
+
 };

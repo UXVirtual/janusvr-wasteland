@@ -9,6 +9,8 @@
 var JanusTools = (function () {
 
     var _lastURL = '';
+    var _lookAtPointVector = new Vector(0,0,0);
+    var _objectTransformPointVector = new Vector(0,0,0);
 
     return {
         createfromXYZ: function (vec3) {
@@ -39,6 +41,14 @@ var JanusTools = (function () {
             return coordinates;
         },
 
+        //TODO: fix issue where new Vectors are created every frame - currently these have memory leaks
+        /*
+         If you're talking about using JS to animate, avoid assigning values to the result of the Vector() function, which allocates memory. As when it used it in an assignment operation, the previously allocated memory remains (you are just changing a pointer during the assignment). The "Vector" object built into JS needs some reworking.
+         A workaround for now is to set each of the x, y, z values explicitly and deal directly with the floats. So for example avoid:
+         object["blah"].pos = Vector(x,y,z);
+         and do:
+         object["blah"].pos.x = x; object["blah"].pos.y = y; object["blah"].pos.z = z;
+         */
         objectLookAtPoint: function (object1, point, ignoreX, ignoreY, ignoreZ, invertPos) {
             if (typeof ignoreX === 'undefined') {
                 ignoreX = false;
@@ -62,7 +72,15 @@ var JanusTools = (function () {
             var y = (ignoreY) ? object1.fwd.y : transformedPoint.y;
             var z = (ignoreZ) ? object1.fwd.z : transformedPoint.z;
 
-            object1.fwd = new Vector(x, y, z);
+            _lookAtPointVector.x = x;
+            _lookAtPointVector.y = y;
+            _lookAtPointVector.z = z;
+
+            object1.fwd = _lookAtPointVector;
+
+            //object1.fwd.x = x;
+            //object1.fwd.y = y;
+            //object1.fwd.z = z;
         },
 
         objectTransformPoint: function (point) {
@@ -71,9 +89,98 @@ var JanusTools = (function () {
             //point.y = point.y * -1;
             //point.z = point.z * -1;
 
-            point = scalarMultiply( new Vector(point.x,point.y,point.z), -1);
+            _objectTransformPointVector.x = point.x;
+            _objectTransformPointVector.y = point.y;
+            _objectTransformPointVector.z = point.z;
+
+            //point = scalarMultiply( new Vector(point.x,point.y,point.z), -1);
+            //point = scalarMultiply(point, -1);
+            point = scalarMultiply(_objectTransformPointVector, -1);
 
             return point;
+        },
+
+        updateHUD2: function (object,player,x,y,z) {
+            //You'll want to incorporate the player's view_dir and up_dir. You'll also need the cross product of those
+            // two for the third vector. Set these to the xdir, ydir, zdir (orientation) for your object so it faces you
+            // regardless of view direction. Lastly you'll want to translate the object outward -
+            // add the player.pos + player.eye_pos + player.view_dir * distance_you_want.
+
+            var crossProduct = cross(player['view_dir'],player['up_dir']);
+
+
+            //print(crossProduct);
+            object.xdir = cross(player['view_dir'],player['up_dir']);
+            object.ydir = scalarMultiply(player['up_dir'], 1);
+            object.zdir = cross(player['view_dir'],player['up_dir']);
+
+            //var faceUserFWD = scalarMultiply( cross(player['view_dir'],player['up_dir']), -1);
+            //object.fwd = faceUserFWD;
+
+            object.pos = new Vector((player.pos.x + player['eye_pos'].x + player['view_dir'].x * 0.5),(player.pos.y + player['eye_pos'].y + player['view_dir'].y + y),(player.pos.z + player['eye_pos'].z + player['view_dir'].z * 0.5));
+
+            print(object.pos);
+
+            //var offsetPosition = translate(player.pos, player['view_dir']);
+
+            //object.pos = translate(offsetPosition, new Vector( 0, y, 0));
+
+        },
+
+
+        //JanusVR screen FOV is 70 as at current version. FOV for Oculus is taken from Oculus SDK
+        vectorToScreen2D: function (vector,player,fov,screenWidth,screenHeight) {
+            //double screenX = 0d, screenY = 0d;
+
+            var screenX = 0;
+            var screenY = 0;
+
+            // Camera is defined in XAML as:
+            //        <Viewport3D.Camera>
+            //             <PerspectiveCamera Position="0,0,800" LookDirection="0,0,-1" />
+            //        </Viewport3D.Camera>
+
+            //PerspectiveCamera cam = viewPort.Camera as PerspectiveCamera;
+
+            // Translate input point using camera position
+            var inputX = vector.x - player.pos.x;
+            var inputY = vector.y - player.pos.y;
+            var inputZ = vector.z - player.pos.z;
+
+            var aspectRatio = screenWidth / screenHeight;
+
+            // Apply projection to X and Y
+            screenX = inputX / (-inputZ * Math.Tan(fov / 2));
+
+            screenY = (inputY * aspectRatio) / (-inputZ * Math.Tan(fov / 2));
+
+            // Convert to screen coordinates
+            //screenX = screenX * screenWidth;
+
+            //screenY = screenY * screenHeight;
+            //screenY = screenHeight * (1 - screenY);
+
+            screenX = screenWidth * (screenX + 1.0) / 2.0;
+            screenY = screenHeight * (1.0 - ((screenY + 1.0) / 2.0));
+
+
+            // Additional, currently unused, projection scaling factors
+            /*
+             double xScale = 1 / Math.Tan(Math.PI * cam.FieldOfView / 360);
+             double yScale = aspectRatio * xScale;
+
+             double zFar = cam.FarPlaneDistance;
+             double zNear = cam.NearPlaneDistance;
+
+             double zScale = zFar == Double.PositiveInfinity ? -1 : zFar / (zNear - zFar);
+             double zOffset = zNear * zScale;
+
+             */
+
+            return {
+                x: screenX,
+                y: screenY
+            };
         },
 
         generateStairs: function (position, color) {

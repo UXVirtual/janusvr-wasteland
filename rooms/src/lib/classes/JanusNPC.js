@@ -126,7 +126,10 @@ var JanusNPC = function (id,dialog,player,targetDistance) {
             }
 
             _imageObject.id = _dialog[sentenceID].image;
-            _imageObject.scale = new Vector(0.1, 0.1, 0.1);
+            //_imageObject.scale = new Vector(0.1, 0.1, 0.1);
+            _imageObject.scale.x = 0.1;
+            _imageObject.scale.y = 0.1;
+            _imageObject.scale.z = 0.1;
             _imageObject.lighting = false;
 
         },
@@ -158,6 +161,8 @@ var JanusNPCTools = (function () {
          *
          * Updates the currently displayed NPC text to face the user. Call this on every Room.update()
          *
+         * TODO: fix issue where new Vectors are created every frame - currently these have memory leaks
+         *
          * @param y (Number) The distance from the bottom of the players viewport to position text
          */
         update: function(player,npc) {
@@ -175,9 +180,9 @@ var JanusNPCTools = (function () {
             if(typeof textObject !== 'undefined'){
 
                 if(currentSentenceIndex > 0){
-                    JanusTools.updateHUD(textObject, player, 0, y);
+                    JanusTools.updateHUD2(textObject, player, 0, y);
                 }else{
-                    JanusTools.updateHUD(textObject, player, 0, -99999);
+                    JanusTools.updateHUD2(textObject, player, 0, -99999);
                 }
 
             }
@@ -186,19 +191,25 @@ var JanusNPCTools = (function () {
 
 
                 if(currentSentenceIndex > 0){
-                    JanusTools.updateHUD(imageObject, player, 0, y+0.15);
+                    JanusTools.updateHUD2(imageObject, player, 0, y+0.15);
                 }else{
-                    JanusTools.updateHUD(imageObject, player, 0, -99999);
+                    JanusTools.updateHUD2(imageObject, player, 0, -99999);
                 }
             }
 
             if(currentSentenceIndex > 0){
-                attractorTextObject.pos = new Vector(npcHeadObject.pos.x,-99999,npcHeadObject.pos.z);
+                //attractorTextObject.pos = new Vector(npcHeadObject.pos.x,-99999,npcHeadObject.pos.z);
+                attractorTextObject.pos.x = npcHeadObject.pos.x;
+                attractorTextObject.pos.y = -99999;
+                attractorTextObject.pos.z = npcHeadObject.pos.z;
             }else{
-                attractorTextObject.pos = new Vector(npcHeadObject.pos.x,npcHeadObject.pos.y+currentSentence.y,npcHeadObject.pos.z);
+                //attractorTextObject.pos = new Vector(npcHeadObject.pos.x,npcHeadObject.pos.y+currentSentence.y,npcHeadObject.pos.z);
+                attractorTextObject.pos.x = npcHeadObject.pos.x;
+                attractorTextObject.pos.y = currentSentence.y;
+                attractorTextObject.pos.z = npcHeadObject.pos.z;
             }
 
-            JanusTools.objectLookAtPoint(attractorTextObject,new Vector(player['view_dir'].x,player['view_dir'].y,player['view_dir'].z),false,false,false,true);
+            JanusTools.objectLookAtPoint(attractorTextObject,player['view_dir'],false,false,false,true);
 
             JanusTools.objectLookAtPoint(npcHeadObject,player["view_dir"],false,false,false,true);
             JanusTools.objectLookAtPoint(npcBodyObject,player["view_dir"],false,true,false,true);
